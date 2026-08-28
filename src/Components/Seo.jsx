@@ -6,8 +6,8 @@ import { useEffect } from "react";
  * index.html are UPDATED in place (no duplicate canonical/description tags),
  * and manages per-page JSON-LD structured data.
  */
-export const SITE_URL = "https://dcraftdev.netlify.app";
-const DEFAULT_IMAGE = "/dcraftmain.png";
+export const SITE_URL = "https://wowstack.vercel.app";
+const DEFAULT_IMAGE = "/fav-icon.png";
 
 function upsertMeta(attr, key, content) {
   if (content == null) return;
