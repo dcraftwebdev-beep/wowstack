@@ -7,7 +7,7 @@ import { useEffect } from "react";
  * and manages per-page JSON-LD structured data.
  */
 export const SITE_URL = "https://wowstack.vercel.app";
-const DEFAULT_IMAGE = "/fav-icon.png";
+const DEFAULT_IMAGE = "/black-fav.png";
 
 function upsertMeta(attr, key, content) {
   if (content == null) return;
