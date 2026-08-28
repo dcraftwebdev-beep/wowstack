@@ -1,0 +1,281 @@
+
+
+@import './variables.css';
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+/* ===== Lenis smooth scroll (required styles) ===== */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* Brand: cursive "Wow" in "Wow Stack" headings/logo */
+.wow-cursive {
+  font-family: 'Pacifico', cursive;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Base */
+body {
+  /* dark base for the dark home page (sections are opaque; this only shows on
+     overscroll / behind the translucent header) */
+  background-color: #07060a;
+  color: var(--clr-text);
+  font-family: var(--font-main);
+  line-height: 1.6;
+  font-size: var(--fs-base);
+  overflow-x: clip;              /* clip (not hidden) so position:sticky still works */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography — flexing display headings */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+h1 { font-size: var(--fs-xxl); }
+h3 { font-size: var(--fs-lg); }
+
+/* ===== Word-by-word blur-to-sharp reveal for all section headings =====
+   Words are wrapped by a global utility (see Layout); each blurs into focus,
+   sweeping left→right, when the heading scrolls into view. */
+.rw {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateY(14px);
+  will-change: filter, opacity, transform;
+}
+.rwIn .rw {
+  animation: rwReveal 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.07s);
+}
+@keyframes rwReveal {
+  from { opacity: 0; filter: blur(12px); transform: translateY(14px); }
+  to   { opacity: 1; filter: blur(0);    transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rw { opacity: 1; filter: none; transform: none; }
+  .rwIn .rw { animation: none; }
+}
+
+/* Revento-style utility: big flexing section title */
+.flex-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
+}
+
+/* ===== Global section tag (used by Services / How We Work / Why Choose Us / ...) ===== */
+.uiTag {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(251, 191, 36, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(0deg, rgba(245, 158, 11, 0.16) 0%, rgba(180, 83, 9, 0.08) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--acc-glow) 0 6px 24px -8px;
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  margin-bottom: 26px;
+  overflow: hidden;
+}
+.uiTag__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 30px;
+  background: var(--acc-2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 6px 1px var(--acc-glow);
+  flex-shrink: 0;
+}
+.uiTag__text {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 14px;
+  background: linear-gradient(90deg, #ffffff 0%, rgba(251, 191, 36, 0.75) 350%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.uiTag__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0) 0%, var(--acc-2) 50%, rgba(245, 158, 11, 0) 100%);
+}
+
+/* ===== Global card top highlighter (amber line along a card's top edge) ===== */
+.uiCardLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0) 0%, var(--acc-2) 50%, rgba(245, 158, 11, 0) 100%);
+  pointer-events: none;
+}
+
+/* ===== Global fixed bottom glow bar (glassy ambient strip at the screen bottom) ===== */
+.screenGlow {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  z-index: 60;
+  pointer-events: none;
+  /* premium frosted glass, edge-to-edge, gradually fading upward */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
+  mask-image: linear-gradient(to top, #000 0%, #000 22%, rgba(0, 0, 0, 0.55) 60%, transparent 100%);
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+/* hidden while the footer is in view */
+.screenGlow.hide {
+  opacity: 0;
+}
+
+/* ===== Global mouse-follow dot cursor ===== */
+.cursorDot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ffffff;
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+@media (pointer: coarse) {
+  .cursorDot { display: none; }
+}
+
+p {
+  font-size: var(--fs-base);
+  color: var(--clr-muted);
+}
+
+/* Links */
+a {
+  color: var(--clr-text);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+/* a:hover {
+  opacity: 0.7;
+} */
+
+/* Layout */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--sp-4);
+}
+
+/* section {
+  padding: var(--sp-16) 0;
+} */
+
+/* Buttons */
+.btn {
+  background: var(--clr-brand);
+  padding: var(--sp-3) var(--sp-6);
+  border-radius: var(--radius-md);
+  color: var(--clr-text);
+  cursor: pointer;
+  display: inline-block;
+  transition: var(--transition);
+}
+
+.btn:hover {
+  background: var(--clr-brand-dark);
+}
+
+/* Inputs */
+input, textarea, select {
+  background: transparent;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: var(--sp-3) var(--sp-4);
+  width: 100%;
+  color: var(--clr-text);
+  font-size: var(--fs-base);
+  transition: var(--transition);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--clr-brand);
+}
+
+/* Flex */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+}
+
+/* Images */
+img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+
+/* Animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+

@@ -1,0 +1,303 @@
+/* ============ FEATURE SHOWCASE — pinned zoom-stack cards ============ */
+.section {
+  position: relative;
+  background: #07060a;
+  padding-top: 90px;
+}
+
+.head {
+  max-width: 760px;
+  margin: 0 auto 10px;
+  padding: 0 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-family: var(--font-main);
+  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 18px 0 0;
+}
+.titleAccent { color: var(--acc, #f59e0b); }
+
+.sub {
+  font-family: var(--font-main);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 16px auto 0;
+}
+
+/* --- sticky stacking deck --- */
+.deck {
+  position: relative;
+  padding-bottom: 8vh;
+}
+
+.card {
+  position: sticky;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* staggered sticky tops so the cards beneath peek through — a real deck */
+.card:nth-child(1) { top: 0; }
+.card:nth-child(2) { top: 18px; }
+.card:nth-child(3) { top: 36px; }
+.card:nth-child(4) { top: 54px; }
+
+.cardInner {
+  width: min(1080px, 92vw);
+  min-height: min(72vh, 620px);
+  display: flex;
+  align-items: center;
+  border-radius: 26px;
+  padding: 44px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0) 100%),
+    rgba(13, 12, 18, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 40px 90px -40px rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  will-change: transform;
+}
+
+.cardGrid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+.cardFlip .cardGrid { direction: rtl; }
+.cardFlip .cardText, .cardFlip .visual { direction: ltr; }
+
+/* text side */
+.cardTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acc-2, #fbbf24);
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.32);
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 18px;
+}
+.cardName {
+  font-family: var(--font-main);
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+}
+.cardDesc {
+  font-family: var(--font-main);
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 24px;
+}
+.points { display: flex; flex-direction: column; gap: 14px; }
+.point {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 600;
+  color: #f4f2f7;
+}
+.pointIcon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  color: #fcd34d;
+  background: rgba(245, 158, 11, 0.14);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* visual side */
+.visual {
+  position: relative;
+  min-height: 340px;
+  border-radius: 18px;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(120% 90% at 80% 0%, rgba(245, 158, 11, 0.28) 0%, rgba(245, 158, 11, 0) 55%),
+    radial-gradient(110% 100% at 10% 100%, rgba(59, 130, 246, 0.22) 0%, rgba(59, 130, 246, 0) 55%),
+    linear-gradient(160deg, rgba(30, 25, 20, 0.9), rgba(10, 12, 20, 0.95));
+}
+.visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(245, 158, 11, 0.12) 50%, transparent 60%);
+  pointer-events: none;
+}
+
+/* mock: browser (web design) */
+.browser {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 8, 12, 0.72);
+}
+.browserBar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); }
+.urlPill {
+  margin-left: 10px;
+  flex: 1;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-family: var(--font-main);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.35);
+}
+.browserBody { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.bHero {
+  height: 74px;
+  border-radius: 10px;
+  background: linear-gradient(120deg, rgba(245, 158, 11, 0.55), rgba(59, 130, 246, 0.4));
+}
+.bRow { display: flex; gap: 10px; }
+.bRow > span { flex: 1; height: 34px; border-radius: 8px; background: rgba(255, 255, 255, 0.08); }
+.bRow3 { display: flex; gap: 8px; }
+.bRow3 > span { flex: 1; height: 24px; border-radius: 6px; background: rgba(255, 255, 255, 0.06); }
+
+/* mock: shop (e-commerce) */
+.shopCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(8, 8, 12, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 12px;
+}
+.shopImg {
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: radial-gradient(circle at 35% 30%, #fde68a, #f59e0b 60%, #7c2d12);
+}
+.shopMeta { flex: 1; }
+.shopName { font-family: var(--font-main); font-size: 15px; font-weight: 600; color: #fff; }
+.shopPrice { font-family: var(--font-main); font-size: 14px; color: #fbbf24; font-weight: 700; margin-top: 4px; }
+.payBtn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1206;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 12px 30px -12px rgba(245, 158, 11, 0.7);
+}
+
+/* mock: seo (growth) */
+.rankCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(8, 8, 12, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+.rankNo {
+  color: #1a1206;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  padding: 3px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.rankUp {
+  margin-left: auto;
+  color: #34d399;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 120px;
+  padding: 0 6px;
+}
+.bar {
+  flex: 1;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.95), rgba(245, 158, 11, 0.22));
+}
+
+/* responsive */
+/* reduced motion: plain stacked sections, no sticky deck */
+@media (prefers-reduced-motion: reduce) {
+  .deck { display: flex; flex-direction: column; gap: 24px; padding-bottom: 0; }
+  .card { position: relative; height: auto; top: 0 !important; }
+  .cardInner { will-change: auto; }
+}
+
+@media (max-width: 767px) {
+  .card { height: 100svh; }
+  .card:nth-child(2) { top: 10px; }
+  .card:nth-child(3) { top: 20px; }
+  .card:nth-child(4) { top: 30px; }
+  .cardInner { padding: 24px; min-height: min(82svh, 680px); }
+  .cardGrid { grid-template-columns: 1fr; gap: 22px; }
+  .cardFlip .cardGrid { direction: ltr; }
+  .visual { min-height: 240px; }
+}

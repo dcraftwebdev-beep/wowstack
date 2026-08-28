@@ -1,0 +1,646 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,800;0,900;1,800&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+/* ── PAGE ── */
+.page {
+  background: #07060a;
+  font-family: var(--font-main);
+  /* clip horizontal overflow only — overflow-y must stay visible so the
+     sticky stacking deck in FeatureShowcase can pin correctly. */
+  overflow-x: clip;
+  padding-top: 60px;
+}
+
+/* ── HERO SECTION ── */
+.heroSection {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0px 0px 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+}
+
+/* ── content (top, centred) ── */
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  max-width: 720px;
+  margin: 0 auto;
+  animation: fadeUp 0.8s ease both;
+}
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--acc);
+  background: rgba(245,158,11,0.07);
+  border: 1px solid rgba(245,158,11,0.15);
+  padding: 6px 16px; border-radius: 100px;
+  width: fit-content;
+}
+.eyebrow svg { width: 11px; height: 11px; }
+
+.heroTitle {
+  font-family: var(--font-main);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 700; color: #ffffff;
+  line-height: 1.08; letter-spacing: -0.02em;
+}
+
+/* ── page-enter animations (opacity-only on the flow so connector
+      measurements stay correct) ── */
+@keyframes featEnterUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes featEnterFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes nodePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.35); }
+  50% { box-shadow: 0 0 0 12px rgba(245, 158, 11, 0); }
+}
+
+/* Flow map reveal — hidden until it scrolls into view (JS adds `.isIn`),
+   then the map, node and cards fade/stagger in. Opacity-only so the
+   measured connector positions stay correct. Works on both the Features
+   page (in view on load) and the home GrowthStack (on scroll). */
+.flowNode { animation: nodePulse 3.2s ease-in-out 1.2s infinite; }
+.flowMap { opacity: 0; }
+.flowMap .flowSideL .flowCard,
+.flowMap .flowSideR .flowCard { opacity: 0; }
+
+.flowMap.isIn { animation: featEnterFade 0.9s ease both; }
+.flowMap.isIn .flowNode { animation: featEnterFade 0.7s ease 0.3s both, nodePulse 3.2s ease-in-out 1.2s infinite; }
+.flowMap.isIn .flowSideL .flowCard,
+.flowMap.isIn .flowSideR .flowCard { animation: featEnterFade 0.6s ease both; }
+.flowMap.isIn .flowSideL .flowCard:nth-child(1),
+.flowMap.isIn .flowSideR .flowCard:nth-child(1) { animation-delay: 0.4s; }
+.flowMap.isIn .flowSideL .flowCard:nth-child(2),
+.flowMap.isIn .flowSideR .flowCard:nth-child(2) { animation-delay: 0.55s; }
+.flowMap.isIn .flowSideL .flowCard:nth-child(3),
+.flowMap.isIn .flowSideR .flowCard:nth-child(3) { animation-delay: 0.7s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .heroTitle, .flowMap, .flowNode,
+  .flowMap .flowSideL .flowCard, .flowMap .flowSideR .flowCard {
+    animation: none; opacity: 1; transform: none;
+  }
+}
+.titleMuted { color: rgba(255, 255, 255, 0.4); }
+.titleAccent {
+  color: var(--acc);
+  position: relative; display: inline-block;
+}
+.titleAccent::after {
+   content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--acc), transparent);
+  border-radius: 2px;
+}
+
+.heroDesc {
+  font-size: 16px; color: rgba(255,255,255,0.6); line-height: 1.7; font-family: var(--font-main);
+  max-width: 540px; margin: 0 auto;
+}
+.heroDesc strong { color: #fff; font-weight: 600; }
+
+/* metrics row */
+.metrics {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.metric {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px 16px 0px 16px;
+  padding: 16px 20px;
+  flex: 1; min-width: 100px;
+  transition: 0.3s;
+}
+.metric:hover {
+  border-color: rgba(245,158,11,0.2);
+ 
+}
+.metricNum {
+  font-family: var(--font-main);
+  font-size: 28px; font-weight: 800;
+  color: var(--acc); line-height: 1;
+}
+.metricLbl {
+  font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.45);
+  text-transform: uppercase; letter-spacing: 0.07em; margin-top: 4px;
+}
+
+/* CTA */
+.ctaRow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+.btnMain {
+  background: linear-gradient(155deg, var(--acc-2), var(--acc)); color: #1a1204; border: none;
+  padding: 12px 12px 12px 22px; border-radius: 50px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 10px;
+  text-decoration: none; letter-spacing: 0.01em;
+  transition: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.btnMain:hover {
+  filter: brightness(1.05);
+  transform: translateX(3px);
+  box-shadow: 0 8px 28px rgba(245,158,11,0.3);
+}
+.btnMain:hover .btnArrow { transform: translateX(2px) rotate(-10deg); }
+.btnArrow {
+  background: #fff; width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--acc); flex-shrink: 0;
+  transition: 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── RIGHT DARK CARD ── */
+.heroRight {
+  background: #070f0e;
+  border-radius: 28px; padding: 36px;
+  position: relative; overflow: hidden;
+  animation: fadeIn 0.9s ease both 0.1s;
+}
+.heroRight::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 250px; height: 250px;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 18px 18px;
+  border-radius: 0 28px 0 0; pointer-events: none;
+}
+.heroRight::after {
+  content: '';
+  position: absolute; bottom: -60px; left: -40px;
+  width: 300px; height: 300px;
+  background: radial-gradient(ellipse, rgba(245,158,11,0.5) 0%, transparent 65%);
+  pointer-events: none;
+}
+.rightInner { position: relative; z-index: 1; }
+
+.rightLabel {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(245,158,11,0.6);
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 6px;
+}
+.rightLabel::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: rgba(245,158,11,0.3);
+}
+
+/* image frame */
+.imgFrame {
+  width: 100%; border-radius: 18px; overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  aspect-ratio: 9 / 10;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px; position: relative;
+}
+.imgFrame img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; display: block; }
+
+/* mini feature grid */
+.featGrid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.featCard {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px; padding: 14px 12px;
+  display: flex; align-items: flex-start; gap: 10px;
+  transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.featCard:hover {
+  background: rgba(245,158,11,0.2);
+  border-color: rgba(245,158,11,0.5);
+  transform: translateY(-3px);
+}
+.featIcon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(245,158,11,0.35);
+  border: 1px solid rgba(245,158,11,0.55);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--acc); flex-shrink: 0; transition: 0.3s;
+}
+.featIcon svg { width: 16px; height: 16px; }
+.featCard:hover .featIcon { background: var(--acc); }
+.featName { font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 3px; }
+.featSub { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 300; line-height: 1.4; }
+
+/* ── FLOW ROW (horizontal, below the content) ── */
+.flowWrap { width: 100%; }
+.flowBg {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
+.flowLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 158, 11, 0.75);
+  margin-bottom: 24px;
+}
+.flowLabel::before,
+.flowLabel::after {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: rgba(245, 158, 11, 0.35);
+}
+
+/* centre node + cards on both sides + branching SVG energy lines */
+.flowMap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(56px, 10vw, 170px);   /* wider — connectors auto-lengthen to match */
+  min-height: 340px;
+}
+.flowLines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+.flowLine {
+  fill: none;
+  stroke: rgba(245, 158, 11, 0.22);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.flowPulse {
+  fill: none;
+  stroke: var(--acc-2);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 0.08 0.92;
+  filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.8));
+  animation: flowPulse 2.6s linear infinite;
+}
+@keyframes flowPulse {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+.flowNode {
+  position: relative;
+  z-index: 2;
+  justify-self: center;
+  width: 66px;
+  height: 66px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--acc-2);
+  background: linear-gradient(160deg, rgba(251, 191, 36, 0.22) 0%, rgba(245, 158, 11, 0.06) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  box-shadow: 0 0 40px -4px var(--acc-glow), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.flowSide {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* tighter cluster */
+  height: 100%;
+  gap: 35px;
+}
+.flowSideL { align-items: flex-end; }
+.flowSideR { align-items: flex-start; }
+
+@property --spark {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.flowCard {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  min-height: 66px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%),
+    rgba(15, 14, 21, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+/* spark travelling around the card border, entering from the flow side */
+.flowCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from calc(var(--spark) + var(--sparkStart, 0deg)),
+    var(--acc-2) 0deg,
+    rgba(245, 158, 11, 0.5) 14deg,
+    rgba(245, 158, 11, 0) 32deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  /* run once (~1.3s) then a ~3s gap, repeat */
+  animation: sparkRun 4.3s linear infinite;
+}
+.flowSideL .flowCard { --sparkStart: 90deg; }   /* start at the right edge */
+.flowSideR .flowCard { --sparkStart: 270deg; }  /* start at the left edge */
+@keyframes sparkRun {
+  0% { --spark: 0deg; opacity: 1; }
+  30% { --spark: 360deg; opacity: 1; }
+  31% { --spark: 360deg; opacity: 0; }
+  100% { --spark: 360deg; opacity: 0; }
+}
+.flowCard:hover {
+  border-color: rgba(245, 158, 11, 0.4);
+  transform: translateY(-3px);
+}
+.flowIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--acc-2);
+  background: linear-gradient(160deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.06) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+.flowName {
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: #fff;
+  line-height: 1.2;
+}
+.flowSub {
+  font-family: var(--font-main);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 2px;
+}
+
+@media (max-width: 720px) {
+  /* stack: node on top, all cards below — keep the energy-flow effect via a glowing spine */
+  .flowMap { grid-template-columns: 1fr; gap: 18px; min-height: 0; position: relative; }
+  .flowLines { display: none; }               /* the horizontal comb doesn't map to a stack */
+  .flowNode { justify-self: center; order: -1; z-index: 2; }
+  .flowSide { height: auto; align-items: stretch; gap: 18px; }
+  .flowCard { max-width: 100%; }
+
+  /* central glowing spine connecting the node down through every card */
+  .flowMap::before {
+    content: "";
+    position: absolute; top: 60px; bottom: 8px; left: 50%; width: 2px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.55), rgba(245, 158, 11, 0.28) 55%, rgba(245, 158, 11, 0.05));
+    z-index: 0; border-radius: 2px;
+  }
+  /* a pulse of energy travelling down the spine */
+  .flowMap::after {
+    content: "";
+    position: absolute; left: 50%; top: 60px; width: 9px; height: 9px;
+    margin-left: -4.5px; border-radius: 50%;
+    background: var(--acc, #f59e0b);
+    box-shadow: 0 0 14px 4px rgba(245, 158, 11, 0.6);
+    z-index: 1;
+    animation: flowSpinePulse 2.6s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  }
+  @keyframes flowSpinePulse {
+    0% { top: 60px; opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { top: calc(100% - 8px); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flowMap::after { animation: none; opacity: 0; }
+  }
+}
+
+/* ── FULL DARK SECTION ── */
+.fullSection {
+  background: #0d0c13;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 80px 28px;
+  position: relative; overflow: hidden;
+}
+.fullSection::before {
+  content: '';
+  position: absolute; top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(ellipse, rgba(26,107,97,0.4) 0%, transparent 65%);
+  pointer-events: none;
+}
+.fullSection::after {
+  content: '';
+  position: absolute; bottom: -60px; left: -60px;
+  width: 360px; height: 360px;
+  background: radial-gradient(ellipse, rgba(245,158,11,0.06) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.fullInner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+
+.fullHeader {
+  display: flex; align-items: flex-end;
+  justify-content: space-between; gap: 24px;
+  flex-wrap: wrap; margin-bottom: 52px;
+}
+.fullTitle {
+  font-family: DM Sans, sans-serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 900; color: #fff;
+  line-height: 1.08; letter-spacing: -0.02em;
+}
+.fullTitleAccent {position: relative; color: var(--acc); }
+.fullTitleAccent::after{
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--acc), transparent);
+  border-radius: 2px;
+}
+.fullSub {
+  font-size: 16px; color: rgba(255,255,255,0.55);
+   max-width: 380px; line-height: 1.65;
+   font-family: var(--font-main);
+}
+
+/* big cards grid */
+.bigGrid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.bigCard {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px; padding: 28px 24px 24px;
+  position: relative; overflow: hidden;
+  transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.bigCard::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245,158,11,0.2), transparent);
+  transition: 0.4s;
+}
+.bigCard:hover {
+  background: rgba(255,255,255,0.09);
+  border-color: rgba(245,158,11,0.7);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.3);
+}
+.bigCard:hover::before {
+  background: linear-gradient(90deg, transparent, rgba(245,158,11,0.4), transparent);
+}
+.bigIcon {
+  width: 52px; height: 52px; border-radius: 15px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--acc);
+  margin-bottom: 20px; transition: 0.4s;
+}
+.bigIcon svg { width: 22px; height: 22px; }
+.bigCard:hover .bigIcon {
+  background: rgba(245,158,11,0.15);
+  border-color: rgba(245,158,11,0.35);
+}
+.bigName {
+  font-family: var(--font-main);
+  font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px;
+}
+.bigDesc {
+  font-size: 16px; color: rgba(255,255,255,0.55);
+  line-height: 1.65; 
+  font-family: var(--font-main);
+}
+
+/* ── IMAGE + CHECKLIST ── */
+.splitRow {
+  max-width: 1200px; margin: 0 auto;
+  padding: 72px 28px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 56px; align-items: center;
+}
+.splitImg {
+  border-radius: 24px; overflow: hidden;
+  background: #12121a;
+  box-shadow: 0 24px 60px rgba(245,158,11,0.18);
+  aspect-ratio: 5/6;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  animation: fadeUp 0.8s ease both;
+}
+.splitImg img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; display: block; }
+.splitImg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(145deg, rgba(245,158,11,0.1), rgba(245,158,11,0.3));
+  pointer-events: none; border-radius: 24px;
+}
+
+.splitContent {
+  display: flex; flex-direction: column; gap: 24px;
+  animation: fadeUp 0.8s ease both 0.1s;
+}
+
+.splitTitle {
+  font-family: DM Sans, sans-serif;
+  font-size: clamp(26px, 3.5vw, 42px);
+  font-weight: 900; color: #ffffff;
+  line-height: 1.05; letter-spacing: -0.03em;
+}
+
+/* checklist */
+.checkList { display: flex; flex-direction: column; gap: 10px; }
+.checkItem {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  font-family: var(--font-main);
+  font-size: 16px; font-weight: 500; color: rgba(255, 255, 255, 0.85);
+  transition: 0.3s;
+}
+.checkItem:hover {
+  border-color: rgba(245,158,11,0.2);
+  transform: translateX(4px);
+}
+.checkDot {
+  width: 30px; height: 30px; border-radius: 8px 8px 0 8px;
+  background: rgba(245,158,11,0.08);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--acc); flex-shrink: 0; transition: 0.3s;
+}
+.checkDot svg { width: 13px; height: 13px; }
+.checkItem:hover .checkDot { background: var(--acc); color: var(--acc); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .heroSection { grid-template-columns: 1fr; gap: 40px; }
+  .bigGrid { grid-template-columns: 1fr 1fr; }
+  .splitRow { grid-template-columns: 1fr; gap: 36px; }
+}
+@media (max-width: 560px) {
+  .heroSection { padding: 52px 16px 40px; }
+  .fullSection { padding: 56px 16px; }
+  .splitRow { padding: 48px 16px; }
+  .bigGrid { grid-template-columns: 1fr; }
+  .featGrid { grid-template-columns: 1fr; }
+}

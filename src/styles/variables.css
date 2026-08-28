@@ -1,0 +1,92 @@
+/* ============================================================
+   Wow Stack — Design Tokens  (Revento-style)
+   Palette: Ink navy + Electric Violet + Lime + Coral + Teal
+   ============================================================ */
+:root {
+  /* Surfaces */
+  --ink: #051A2F;          /* navy main background */
+  --ink-2: #0A2540;        /* navy card / panel */
+  --ink-3: #103050;        /* raised navy card */
+  --cream: #F4EFE4;        /* light section background */
+  --paper: #FBF8F0;        /* lightest surface */
+  --para: #C8DDF1;         /* light-blue paragraph text */
+  --black:#07060a;        /* dark text on light bg */
+
+  /* Brand — Lavender Violet */
+  --wowstack-brand: #7C5CFC;
+  --wowstack-brand-light: #9D89FC;
+  --wowstack-brand-dark: #5B3FE0;
+
+  /* Playful accents */
+  --lime: #E9FA49;
+  --coral: #FF4F3F;
+  --teal: #1FC9A0;
+  --orange: #FF8F27;
+  --amber: #FF8F27;
+
+  /* ===== Accent (single source of truth for the dark theme) ===== */
+  --acc: #f59e0b;          /* primary amber */
+  --acc-2: #fbbf24;        /* bright amber */
+  --acc-3: #b45309;        /* deep amber */
+  --acc-4: #fcd34d;        /* light amber */
+  --acc-glow: rgba(245, 158, 11, 0.5);
+
+  /* Legacy aliases (kept so old refs don't break) */
+  --gold: var(--lime);
+  --dcraf-yellow: var(--lime);
+  --wowstack-brand-light-alias: var(--wowstack-brand-light);
+  --wowstack-accent: var(--cream);
+  --wowstack-accent-light: #ffffff;
+  --wowstack-accent-dark: #EFE9DC;
+
+  --vibrant: linear-gradient(135deg, #0B0B16 0%, #0B0B16 40%, #6C4CF1 100%);
+
+  /* Base colors */
+  --clr-bg: var(--ink);
+  --text-main: #14142A;
+  --text-muted: #5b5b6b;
+  --clr-text: #14142A;
+  --clr-muted: #6b6b76;
+  --clr-border: #e2ddd2;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;  /* bold flexing headings */
+  --font-main: "Outfit", sans-serif;
+  --font-secondary: 'Unbounded', cursive;
+  --font-accent: "Shadows Into Light", cursive;
+  --style-font: italic;
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-base: 16px;
+  --fs-md: 18px;
+  --fs-md2: 19px;
+  --fs-lg: 24px;
+  --fs-xl: 32px;
+  --fs-xxl: 48px;
+
+  /* Spacing */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px; --sp-8: 32px; --sp-10: 40px;
+  --sp-12: 48px; --sp-16: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;  --radius-md: 12px; --radius-lg: 18px;
+  --radius-xl: 26px; --radius-full: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(11, 11, 22, 0.14);
+  --shadow-md: 0 8px 24px rgba(11, 11, 22, 0.18);
+  --shadow-lg: 0 20px 60px rgba(11, 11, 22, 0.28);
+
+  --transition: 0.3s ease;
+
+  /* Container width */
+  --container-width: 1280px;
+  --container-width-sm: 768px;
+  --container-width-md: 1024px;
+  --container-width-xl: 1200px;
+  --container-width-xxl: 1300px;
+  --container-width-lg: 1440px;
+  --container-padding: 20px;
+  --container-margin: auto;
+}

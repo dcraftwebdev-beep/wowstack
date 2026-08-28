@@ -1,0 +1,62 @@
+/* ============ HORIZONTAL SCROLL TEXT (sticky frame, no GSAP pin) ============ */
+.horizontal {
+  position: relative;
+  /* tall section = scroll distance for the horizontal tween */
+  height: 400vh;
+  background: #07060a;
+}
+
+/* sticky viewport frame — replaces GSAP pin (React-safe) */
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  gap: 4vw;
+  padding-left: 100vw;
+  margin: 0;
+  will-change: transform;
+}
+
+.headingXl {
+  font-family: var(--font-main);
+  font-size: clamp(2.4rem, 11vw, 12rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.accent {
+  color: var(--acc, #f59e0b);
+}
+
+/* Static fallback when the horizontal scroll isn't active
+   (small screens or reduced motion) — show the line normally. */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .horizontal { height: auto; }
+  .sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding: 72px 0;
+  }
+  .text {
+    white-space: normal;
+    width: 100%;
+    padding-left: 0;
+    padding: 0 24px;
+    gap: 0;
+  }
+  .headingXl {
+    font-size: clamp(2rem, 8vw, 4rem);
+  }
+}

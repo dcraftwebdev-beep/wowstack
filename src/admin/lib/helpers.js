@@ -1,0 +1,30 @@
+export const slugify = (v = "") =>
+  v.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+export const emptyProject = () => ({
+  id: crypto.randomUUID?.() || String(Date.now()),
+  slug: "",
+  name: "",
+  client: "",
+  category: "",
+  industry: "",
+  year: String(new Date().getFullYear()),
+  status: "draft",
+  featured: false,
+  accent: "#f59e0b",
+  url: "",
+  shortDesc: "",
+  positioning: "",
+  previewImage: "",
+  heroImage: "",
+  gallery: [],
+  services: [],
+  technologies: [],
+  deliverables: [],
+  timeline: "",
+  challenge: "",
+  approach: "",
+  solution: "",
+  metrics: [{ value: "", label: "" }],
+  sortOrder: 0,
+});

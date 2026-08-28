@@ -1,0 +1,22 @@
+.section {
+  --acc: #f59e0b;
+  background: #07060a;
+  max-width: 1160px; margin: 0 auto; padding: clamp(72px, 10vw, 120px) 24px clamp(72px, 10vw, 110px);
+  font-family: var(--font-main), sans-serif;
+}
+.card {
+  position: relative; overflow: hidden; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: clamp(48px, 7vw, 88px) 32px; border-radius: 30px;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  background:
+    radial-gradient(120% 150% at 50% 0%, rgba(245, 158, 11, 0.28), transparent 55%),
+    linear-gradient(180deg, rgba(30, 22, 12, 0.8), rgba(10, 9, 14, 0.85));
+}
+.title { font-family: var(--font-main); font-size: clamp(2.1rem, 5vw, 3.6rem); font-weight: 700; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin: 14px 0 0; }
+.accent { color: var(--acc); }
+.sub { color: rgba(255, 255, 255, 0.66); font-size: 16.5px; line-height: 1.6; max-width: 520px; margin: 16px 0 26px; }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1); }
+.isVisible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }

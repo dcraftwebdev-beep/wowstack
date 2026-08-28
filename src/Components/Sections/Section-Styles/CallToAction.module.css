@@ -1,0 +1,111 @@
+/* ============ REVENTO-STYLE — READY TO PARTNER CTA ============ */
+.ctaSection {
+  background: #07060a;
+  padding: 72px 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaCard {
+  max-width: 1100px;
+  margin: 0 auto;
+  /* background: var(--wowstack-brand); */
+  border-radius: 30px;
+  padding: 80px 50px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.ctaCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 20% 0%, rgba(255,255,255,0.16), transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 100%, rgba(212,244,78,0.18), transparent 60%);
+  pointer-events: none;
+}
+
+.inner { position: relative; z-index: 2; }
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0 0 32px;
+}
+.hl { color: var(--lime); }
+
+.btns {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.btnPrimary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--lime);
+  color: var(--ink);
+  padding: 8px 8px 8px 26px;
+  border-radius: 50px;
+  font-family: var(--font-main);
+  font-weight: 700; font-size: 16px;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btnPrimary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212,244,78,0.35); }
+.btnArrow {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--ink); color: var(--lime);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s ease;
+}
+.btnPrimary:hover .btnArrow { transform: rotate(-45deg); }
+
+.btnWhatsapp {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 15px 26px;
+  border-radius: 50px;
+  font-family: var(--font-main);
+  font-weight: 600; font-size: 16px;
+  text-decoration: none;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+.btnWhatsapp:hover { background: rgba(255, 255, 255, 0.12); border-color: #fff; }
+
+.note { color: rgba(255, 255, 255, 0.7); font-size: 13px; }
+
+/* stickers */
+.sticker { position: absolute; z-index: 3; pointer-events: none; }
+.st1 { top: 40px; left: 8%; width: 30px; height: 30px; color: var(--lime); animation: spinSlow 9s linear infinite; }
+.st2 { bottom: 46px; right: 9%; width: 36px; height: 36px; color: var(--amber); }
+.pillSticker {
+  position: absolute;
+  top: 50px; right: 10%;
+  z-index: 3;
+  background: var(--coral);
+  color: #fff;
+  font-family: var(--font-main);
+  font-weight: 700; font-size: 13px;
+  padding: 7px 15px; border-radius: 50px;
+  transform: rotate(8deg);
+  box-shadow: var(--shadow-md);
+}
+
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+
+@media (max-width: 700px) {
+  .ctaSection { padding: 48px 16px; }
+  .ctaCard { padding: 56px 24px; border-radius: 24px; }
+  .sticker, .pillSticker { display: none; }
+  .btns { flex-direction: column; }
+  .btnPrimary, .btnWhatsapp { width: 100%; justify-content: center; }
+}

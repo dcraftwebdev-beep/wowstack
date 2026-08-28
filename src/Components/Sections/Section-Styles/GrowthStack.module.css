@@ -1,0 +1,46 @@
+/* ============ WOW STACK — GROWTH STACK (home flow section) ============ */
+.section {
+  background: #07060a;
+  padding: 72px 28px;
+  overflow: hidden;
+}
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+.head {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-family: var(--font-main);
+  font-size: clamp(2.3rem, 5vw, 4rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.titleMuted {
+  display: block;
+  color: rgba(255, 255, 255, 0.4);
+}
+.sub {
+  font-family: var(--font-main);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 17px;
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 18px auto 0;
+}
+
+@media (max-width: 600px) {
+  .section { padding: 48px 18px; }
+}

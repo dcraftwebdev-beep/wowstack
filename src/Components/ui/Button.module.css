@@ -1,0 +1,74 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-main), sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.label { display: inline-block; }
+.ico { display: inline-flex; align-items: center; }
+
+/* sizes — fixed min-height so primary (with arrow box) and ghost match exactly */
+.sm { min-height: 40px; padding: 0 18px; font-size: 13.5px; }
+.md { min-height: 50px; padding: 0 24px; font-size: 15px; }
+.lg { min-height: 56px; padding: 0 32px; font-size: 16.5px; }
+.full { width: 100%; }
+
+/* variants */
+/* primary = the site "See more services" / header CTA button:
+   rounded-rect amber-glass, white text, amber-gradient square arrow box */
+.primary {
+  color: #fff;
+  border-radius: 12px;
+  border-color: rgba(251, 191, 36, 0.22);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(0deg, rgba(245, 158, 11, 0.16) 0%, rgba(180, 83, 9, 0.08) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--acc-glow, rgba(245, 158, 11, 0.5)) 0 6px 24px -8px;
+}
+.primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), var(--acc-glow, rgba(245, 158, 11, 0.5)) 0 10px 30px -6px;
+}
+/* the amber-gradient square arrow box on the trailing icon */
+.primary .icoTrail {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: grid; place-items: center; flex-shrink: 0;
+  background: linear-gradient(155deg, var(--acc-2, #fbbf24) 0%, var(--acc, #f59e0b) 100%);
+  color: #1a1204;
+  transition: transform 0.3s ease;
+}
+.primary:hover:not(:disabled) .icoTrail { transform: translate(2px, -2px); }
+.primary:has(.icoTrail) { padding-right: 8px; }
+.sm.primary .icoTrail { width: 24px; height: 24px; }
+.sm.primary:has(.icoTrail) { padding-right: 6px; }
+.lg.primary .icoTrail { width: 30px; height: 30px; }
+.lg.primary:has(.icoTrail) { padding-right: 9px; }
+
+.ghost {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+.ghost:hover:not(:disabled) { transform: translateY(-2px); border-color: rgba(255, 255, 255, 0.4); background: rgba(255, 255, 255, 0.08); }
+
+.dark {
+  color: #fff;
+  background: #16151c;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.dark:hover:not(:disabled) { transform: translateY(-2px); background: #201f28; }
+
+.light {
+  color: #0b0a0f;
+  background: #fff;
+}
+.light:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.5); }

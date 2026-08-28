@@ -1,0 +1,36 @@
+.section {
+  --acc: #f59e0b;
+  --acc-2: #fbbf24;
+  background: #07060a;
+  max-width: 1160px; margin: 0 auto; padding: clamp(64px, 9vw, 110px) 24px 0;
+  font-family: var(--font-main), sans-serif;
+}
+.head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; margin-bottom: 48px; }
+.title { font-family: var(--font-main); font-size: clamp(2.3rem, 5vw, 4rem); font-weight: 700; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin: 0; }
+.titleMuted { color: rgba(255, 255, 255, 0.4); }
+.sub { color: rgba(255, 255, 255, 0.6); font-size: 16.5px; line-height: 1.6; max-width: 560px; margin: 0 auto; }
+
+.teamGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.teamCard {
+  display: flex; align-items: center; gap: 16px; padding: 20px; border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0)), rgba(15,14,21,0.5);
+  transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), border-color 0.35s, box-shadow 0.35s;
+}
+.teamCard:hover { transform: translateY(-5px); border-color: rgba(245, 158, 11, 0.3); box-shadow: 0 20px 50px -28px rgba(245, 158, 11, 0.45); }
+.teamAvatar { flex-shrink: 0; width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; color: #0b0a0f; background: linear-gradient(135deg, var(--acc-2), var(--acc)); }
+.teamMeta { flex: 1; min-width: 0; }
+.teamRole { font-size: 16px; font-weight: 700; color: #fff; }
+.teamFocus { font-size: 13px; color: rgba(255, 255, 255, 0.55); margin-top: 2px; }
+.teamPlus {
+  flex-shrink: 0; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center;
+  color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(255, 255, 255, 0.03); transition: all 0.25s ease;
+}
+.teamCard:hover .teamPlus { color: #0b0a0f; background: var(--acc); border-color: transparent; }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1); }
+.isVisible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+@media (max-width: 900px) { .teamGrid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .teamGrid { grid-template-columns: 1fr; } }

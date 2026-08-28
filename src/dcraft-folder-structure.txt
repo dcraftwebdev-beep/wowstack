@@ -1,0 +1,54 @@
+dcraft/
+  ├── public/
+  │     ├── assets/
+  │     │      ├── images/
+  │     │      ├── icons/
+  │     │      ├── logos/
+  │     │      └── fonts/
+  │     └── favicon.ico
+  │
+  ├── src/
+  │     ├── components/
+  │     │      ├── ui/
+  │     │      ├── layout/
+  │     │      └── sections/
+  │     │            ├── hero/
+  │     │            ├── services/
+  │     │            ├── about/
+  │     │            ├── portfolio/
+  │     │            └── contact/
+  │
+  │     ├── pages/            (Next)  
+  │     ├── app/              (Next App Router)
+  │     ├── routes/           (Vite plus React Router)
+  │
+  │     ├── styles/
+  │     │      ├── globals.css
+  │     │      ├── variables.css
+  │     │      └── components.css
+  │
+  │     ├── hooks/
+  │     │      ├── useForm.js
+  │     │      └── useScroll.js
+  │
+  │     ├── utils/
+  │     │      ├── helpers.js
+  │     │      └── constants.js
+  │
+  │     ├── lib/
+  │     │      ├── api.js
+  │     │      └── resend.js
+  │
+  │     ├── data/
+  │     │      ├── services.json
+  │     │      ├── portfolio.json
+  │     │      └── testimonials.json
+  │
+  │     └── context/
+  │           ├── ThemeContext.js
+  │           └── UIContext.js
+  │
+  ├── .env
+  ├── package.json
+  ├── vite.config.js or next.config.js
+  └── README.md

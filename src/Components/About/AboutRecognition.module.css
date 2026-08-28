@@ -1,0 +1,34 @@
+.section {
+  --acc: #f59e0b;
+  background: #07060a;
+  max-width: 1160px; margin: 0 auto; padding: clamp(64px, 9vw, 110px) 24px 0;
+  font-family: var(--font-main), sans-serif;
+  display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(30px, 5vw, 60px); align-items: start;
+}
+.recogHead { display: flex; flex-direction: column; gap: 16px; text-align: left; align-items: flex-start; position: sticky; top: 90px; }
+.title { font-family: var(--font-main); font-size: clamp(2.1rem, 4vw, 3.4rem); font-weight: 700; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin: 0; text-align: left; }
+.accent { color: var(--acc); }
+.recogGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.recogCard {
+  padding: 24px 22px; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.09);
+  background: rgba(15, 14, 21, 0.5); transition: transform 0.35s, border-color 0.35s;
+}
+.recogCard:hover { transform: translateY(-4px); border-color: rgba(245, 158, 11, 0.28); }
+.recogIcon { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; margin-bottom: 16px; color: var(--acc); background: rgba(245, 158, 11, 0.12); }
+.recogBig {
+  font-size: clamp(1.8rem, 3vw, 2.3rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1;
+  background: linear-gradient(150deg, #fff 20%, var(--acc)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+}
+.recogLabel { font-size: 15px; font-weight: 700; color: #fff; margin-top: 10px; }
+.recogSub { font-size: 13px; color: rgba(255, 255, 255, 0.5); margin-top: 3px; }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.23, 1, 0.32, 1); }
+.isVisible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+@media (max-width: 900px) {
+  .section { grid-template-columns: 1fr; }
+  .recogHead { position: static; }
+  .recogGrid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) { .recogGrid { grid-template-columns: 1fr; } }
