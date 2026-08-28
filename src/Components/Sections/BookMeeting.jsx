@@ -9,7 +9,7 @@ import s from "./Section-Styles/BookMeeting.module.css";
  *    cal.com/gunal/15min it is "gunal/15min". Until it's correct the embed
  *    will show Cal.com's "not found" screen.
  */
-const CAL_LINK = "gunal/15min"; // ← set your real Cal.com username/event
+const CAL_LINK = "dcraft-tnljk4/catch-up"; // your real Cal.com event slug
 const WHATSAPP =
   "https://wa.me/916383091748?text=Hi%2C%20I%27d%20like%20to%20talk%20about%20a%20project.";
 
@@ -42,10 +42,10 @@ export default function BookMeeting() {
     (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
     /* eslint-enable */
     try {
-      window.Cal("init", { origin: "https://cal.com" });
+      window.Cal("init", { origin: "https://app.cal.com" });
       window.Cal("ui", {
-        theme: "light",
-        cssVarsPerTheme: { light: { "cal-brand": "#f59e0b" } },
+        theme: "dark",
+        cssVarsPerTheme: { dark: { "cal-brand": "#f59e0b" } },
         hideEventTypeDetails: false,
         layout: "month_view",
       });
@@ -53,7 +53,7 @@ export default function BookMeeting() {
         window.Cal("inline", {
           elementOrSelector: calRef.current,
           calLink: CAL_LINK,
-          config: { theme: "light", layout: "month_view" },
+          config: { theme: "dark", layout: "month_view" },
         });
       }
     } catch (e) { /* embed unavailable */ }
@@ -67,7 +67,7 @@ export default function BookMeeting() {
             Let's build something <span className={s.titleAccent}>great</span> together.
           </h2>
           <p className={s.sub}>
-            Pick a time below for a free 15-minute call — no pressure, just a chat
+            Pick a time below for a free call — no pressure, just a chat
             about your project.
           </p>
         </div>

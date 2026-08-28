@@ -15,7 +15,7 @@ const Contact = () => {
     <>
     <PageSeo path="/contact" />
     <div>
-      <ContactHub />
+      {/* <ContactHub /> */}
       <BookMeeting />
       <ContactMe />
     </div>
