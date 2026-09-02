@@ -49,6 +49,9 @@ export default function ScrollPanels() {
             end: "+=" + (N - 1) * 100 + "%",
             pin: pinRef.current,
             scrub: 1,
+            anticipatePin: 1,
+            invalidateOnRefresh: true, // recompute cleanly on every refresh
+            refreshPriority: 1,        // pin computes before the parallax triggers
           },
         });
 

@@ -121,7 +121,8 @@ function useParallax() {
           )
         })
       })
-      ScrollTrigger.refresh()
+      // no global ScrollTrigger.refresh() here — it can disturb pinned
+      // sections (ScrollPanels). The parallax triggers self-register.
     }, 200)
     return () => { clearTimeout(t); ctx && ctx.revert() }
   }, [location.pathname])
