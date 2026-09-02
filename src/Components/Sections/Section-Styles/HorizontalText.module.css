@@ -39,9 +39,9 @@
   color: var(--acc, #f59e0b);
 }
 
-/* Static fallback when the horizontal scroll isn't active
-   (small screens or reduced motion) — show the line normally. */
-@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+/* Static fallback only for reduced-motion users — mobile keeps the
+   horizontal scroll, same as desktop. */
+@media (prefers-reduced-motion: reduce) {
   .horizontal { height: auto; }
   .sticky {
     position: static;
@@ -59,4 +59,8 @@
   .headingXl {
     font-size: clamp(2rem, 8vw, 4rem);
   }
+}
+/* on phones keep the horizontal scroll but start the text a touch sooner */
+@media (max-width: 767px) {
+  .text { padding-left: 80vw; }
 }

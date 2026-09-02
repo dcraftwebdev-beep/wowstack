@@ -14,7 +14,7 @@ export default function HorizontalText() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
         const split = SplitText.create(textRef.current, { type: "chars, words" });
 
         // Horizontal scroll driven by the tall section — CSS `position: sticky`

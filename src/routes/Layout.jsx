@@ -92,6 +92,41 @@ function useHeadingReveal() {
   }, [location.pathname])
 }
 
+// Gentle scroll-parallax for any element marked with data-parallax="<amount>"
+// (e.g. 0.15–0.4). Scrubbed to the scroll, re-created per route, and skipped
+// for reduced-motion. Never applied to pinned sections, so no conflicts.
+function useParallax() {
+  const location = useLocation()
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    let ctx
+    const t = setTimeout(() => {
+      ctx = gsap.context(() => {
+        gsap.utils.toArray("[data-parallax]").forEach((el) => {
+          const amt = parseFloat(el.dataset.parallax) || 0.2
+          const shift = 90 * amt // px of travel each way — subtle, no layout gaps
+          gsap.fromTo(
+            el,
+            { y: shift },
+            {
+              y: -shift,
+              ease: "none",
+              scrollTrigger: {
+                trigger: el,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
+            }
+          )
+        })
+      })
+      ScrollTrigger.refresh()
+    }, 200)
+    return () => { clearTimeout(t); ctx && ctx.revert() }
+  }, [location.pathname])
+}
+
 // small white dot that trails the mouse across the whole site
 function CursorDot() {
   const dotRef = useRef(null)
@@ -119,6 +154,7 @@ export default function Layout() {
   const glowRef = useRef(null)
   const lenisRef = useLenis()
   useHeadingReveal()
+  useParallax()
 
   // jump to top on route change (with Lenis, so it doesn't smooth-scroll the whole page)
   const { pathname } = useLocation()

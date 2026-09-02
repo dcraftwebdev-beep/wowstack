@@ -118,8 +118,8 @@ export default function MyServices() {
 
   return (
     <section id="services-section" className={styles.section} ref={ref}>
-      {/* TOP: content */}
-      <div className={styles.top}>
+      {/* TOP: content — gentle parallax rise as it enters after the horizontal text */}
+      <div className={styles.top} data-parallax="0.28">
         <div className={styles.content}>
           <div className={`uiTag ${styles.reveal}`}>
             <span className="uiTag__dot" />

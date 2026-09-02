@@ -34,7 +34,7 @@
 
 .faq-title {
   font-family: var(--font-main);
-  font-size: clamp(2.1rem, 5vw, 3.4rem);
+  font-size: clamp(1.8rem, 6vw, 3.4rem);
   font-weight: 700;
   margin-bottom: 14px;
   color: #ffffff;

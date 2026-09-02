@@ -21,7 +21,7 @@ export default function ScrollPanels() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
-      mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
         const panels = gsap.utils.toArray(`.${s.panel}`, pinRef.current);
         const outers = panels.map((p) => p.querySelector(`.${s.outer}`));
         const inners = panels.map((p) => p.querySelector(`.${s.inner}`));

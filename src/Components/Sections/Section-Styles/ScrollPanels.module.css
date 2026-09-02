@@ -76,12 +76,7 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* ── MOBILE: no pin/scroll-jack — clean stacked video panels ── */
+/* mobile keeps the same pinned scroll as desktop (GSAP controls it) */
 @media (max-width: 767px) {
-  .pin { height: auto; overflow: visible; display: flex; flex-direction: column; gap: 14px; padding: 14px; }
-  .panel { position: relative; inset: auto; visibility: visible; height: 58vh; border-radius: 20px; overflow: hidden; }
-  .outer, .inner { position: static; transform: none !important; }
-  .bg { position: absolute; inset: 0; transform: none !important; }
-  .heading { font-size: clamp(1.9rem, 8vw, 3rem); width: 88%; }
-  .hint { display: none; }
+  .heading { font-size: clamp(2rem, 9vw, 4rem); }
 }
