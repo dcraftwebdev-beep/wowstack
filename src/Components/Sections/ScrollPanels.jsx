@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
 import s from "./Section-Styles/ScrollPanels.module.css";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const PANELS = [
   { lead: "Ideas", accent: "into impact", video: "/videos/video1.mp4" },
@@ -23,15 +24,31 @@ export default function ScrollPanels() {
         // Layered pinning: each panel pins at the top with NO pin-spacing, so the
         // next panel scrolls straight up and layers over the pinned one.
         const panels = gsap.utils.toArray(`.${s.panel}`, sectionRef.current);
-        const triggers = panels.map((panel) =>
-          ScrollTrigger.create({
-            trigger: panel,
-            start: "top top",
-            pin: true,
-            pinSpacing: false,
-          })
-        );
-        return () => triggers.forEach((t) => t.kill());
+        const splits = [];
+        const triggers = [];
+
+        panels.forEach((panel) => {
+          // heading text reveal — chars fly in as the panel scrolls up
+          const heading = panel.querySelector(`.${s.heading}`);
+          if (heading) {
+            const split = new SplitText(heading, { type: "chars" });
+            splits.push(split);
+            gsap.from(split.chars, {
+              yPercent: 130,
+              autoAlpha: 0,
+              ease: "power3.out",
+              duration: 0.7,
+              stagger: { each: 0.025, from: "random" },
+              scrollTrigger: { trigger: panel, start: "top 65%", toggleActions: "play none none reverse" },
+            });
+          }
+          // layered pin
+          triggers.push(
+            ScrollTrigger.create({ trigger: panel, start: "top top", pin: true, pinSpacing: false })
+          );
+        });
+
+        return () => { triggers.forEach((t) => t.kill()); splits.forEach((sp) => sp.revert()); };
       });
     }, sectionRef);
 

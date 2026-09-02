@@ -104,7 +104,7 @@ function useParallax() {
       ctx = gsap.context(() => {
         gsap.utils.toArray("[data-parallax]").forEach((el) => {
           const amt = parseFloat(el.dataset.parallax) || 0.2
-          const shift = 90 * amt // px of travel each way — subtle, no layout gaps
+          const shift = 120 * amt // px of travel each way
           gsap.fromTo(
             el,
             { y: shift },
@@ -116,6 +116,7 @@ function useParallax() {
                 start: "top bottom",
                 end: "bottom top",
                 scrub: 1,
+                invalidateOnRefresh: true, // recompute after pins change page height
               },
             }
           )
