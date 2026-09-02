@@ -15,38 +15,27 @@ const PANELS = [
 
 export default function ScrollPanels() {
   const sectionRef = useRef(null);
-  const pinRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const panels = gsap.utils.toArray(`.${s.panel}`, pinRef.current);
-        const N = panels.length;
-
-        // stack all panels full-screen; every panel after the first waits
-        // below the fold and slides up over the previous one as you scroll.
-        gsap.set(panels, { yPercent: 100, zIndex: (i) => i + 1 });
-        gsap.set(panels[0], { yPercent: 0 });
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
+        // Layered pinning: each panel pins at the top with NO pin-spacing, so the
+        // next panel scrolls straight up and layers over the pinned one.
+        const panels = gsap.utils.toArray(`.${s.panel}`, sectionRef.current);
+        const triggers = panels.map((panel) =>
+          ScrollTrigger.create({
+            trigger: panel,
             start: "top top",
-            end: "+=" + (N - 1) * 100 + "%",
-            pin: pinRef.current,
-            scrub: 1,
-            anticipatePin: 1,
-          },
-        });
-
-        for (let i = 1; i < N; i++) {
-          tl.to(panels[i], { yPercent: 0, ease: "none" }, i - 1);
-        }
+            pin: true,
+            pinSpacing: false,
+          })
+        );
+        return () => triggers.forEach((t) => t.kill());
       });
     }, sectionRef);
 
-    // recompute pin measurements once fonts/videos/layout have settled
+    // recompute pin positions once fonts/videos/layout settle
     const t = setTimeout(() => ScrollTrigger.refresh(), 300);
     const onLoad = () => ScrollTrigger.refresh();
     window.addEventListener("load", onLoad);
@@ -54,27 +43,25 @@ export default function ScrollPanels() {
   }, []);
 
   return (
-    <section className={s.section} ref={sectionRef}>
-      <div className={s.pin} ref={pinRef}>
-        {PANELS.map((p, i) => (
-          <div className={s.panel} key={i}>
-            <video
-              className={s.bgVideo}
-              src={p.video}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-            />
-            <span className={s.scrim} />
-            <h2 className={s.heading} data-noreveal>
-              {p.lead} <span className={s.accent}>{p.accent}</span>
-            </h2>
-            {i === 0 && <span className={s.hint}>scroll ↓</span>}
-          </div>
-        ))}
-      </div>
-    </section>
+    <div className={s.section} ref={sectionRef}>
+      {PANELS.map((p, i) => (
+        <section className={s.panel} key={i}>
+          <video
+            className={s.bgVideo}
+            src={p.video}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          />
+          <span className={s.scrim} />
+          <h2 className={s.heading} data-noreveal>
+            {p.lead} <span className={s.accent}>{p.accent}</span>
+          </h2>
+          {i === 0 && <span className={s.hint}>scroll ↓</span>}
+        </section>
+      ))}
+    </div>
   );
 }

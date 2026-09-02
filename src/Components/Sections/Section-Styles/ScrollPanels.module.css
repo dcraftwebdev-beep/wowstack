@@ -1,24 +1,16 @@
-/* ============ SCROLL PANELS — pinned slide-up stack ============ */
+/* ============ SCROLL PANELS — layered pinning ============ */
 .section { position: relative; background: #07060a; }
 
-.pin {
+/* each panel is a full-screen layer, pinned at the top as you scroll */
+.panel {
   position: relative;
   height: 100vh;
-  overflow: hidden;
-}
-
-.panel {
-  position: absolute;
-  inset: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #0e0b14;
-  will-change: transform;
 }
-/* before GSAP runs, keep every panel after the first off-screen (no flash) */
-.panel:not(:first-child) { transform: translateY(100%); }
 
 .bgVideo {
   position: absolute;
@@ -68,15 +60,13 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* mobile keeps the same pinned slide-up scroll as desktop (GSAP controls it) */
 @media (max-width: 767px) {
   .heading { font-size: clamp(2rem, 9vw, 4rem); }
 }
 
-/* Reduced-motion: GSAP is skipped, so show the panels as a clean stacked list
-   instead of a blank/overlapping section. */
+/* Reduced-motion: no pinning runs, so panels simply stack and scroll normally
+   (still full, readable — no blank section). */
 @media (prefers-reduced-motion: reduce) {
-  .pin { height: auto; overflow: visible; display: flex; flex-direction: column; gap: 14px; padding: 14px; }
-  .panel { position: relative; inset: auto; transform: none !important; height: 60vh; border-radius: 20px; }
+  .panel { height: 78vh; }
   .hint { display: none; }
 }
