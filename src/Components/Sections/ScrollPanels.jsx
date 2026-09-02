@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SplitText } from "gsap/SplitText";
 import s from "./Section-Styles/ScrollPanels.module.css";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 const PANELS = [
   { lead: "Ideas", accent: "into impact", video: "/videos/video1.mp4" },
@@ -23,25 +22,13 @@ export default function ScrollPanels() {
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: no-preference)", () => {
         const panels = gsap.utils.toArray(`.${s.panel}`, pinRef.current);
-        const outers = panels.map((p) => p.querySelector(`.${s.outer}`));
-        const inners = panels.map((p) => p.querySelector(`.${s.inner}`));
-        const bgs = panels.map((p) => p.querySelector(`.${s.bg}`));
-        const heads = panels.map((p) => p.querySelector(`.${s.heading}`));
-        const splits = heads.map((h) => new SplitText(h, { type: "chars" }));
         const N = panels.length;
 
-        // initial state — panel 0 in view, the rest stacked off-screen
-        gsap.set(panels, { autoAlpha: 0 });
-        gsap.set(panels[0], { autoAlpha: 1, zIndex: 1 });
-        gsap.set(outers, { yPercent: 100 });
-        gsap.set(inners, { yPercent: -100 });
-        gsap.set([outers[0], inners[0]], { yPercent: 0 });
-        splits.forEach((sp, i) => {
-          if (i !== 0) gsap.set(sp.chars, { autoAlpha: 0, yPercent: 150 });
-        });
+        // stack all panels full-screen; every panel after the first waits
+        // below the fold and slides up over the previous one as you scroll.
+        gsap.set(panels, { yPercent: 100, zIndex: (i) => i + 1 });
+        gsap.set(panels[0], { yPercent: 0 });
 
-        // one scrubbed timeline, pinned + snapped to each panel;
-        // natural page scroll drives it and releases to the next section.
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -54,32 +41,13 @@ export default function ScrollPanels() {
         });
 
         for (let i = 1; i < N; i++) {
-          const pos = i - 1;
-          tl.set(panels[i], { autoAlpha: 1, zIndex: i + 1 }, pos)
-            .fromTo(
-              [outers[i], inners[i]],
-              { yPercent: (x) => (x ? -100 : 100) },
-              { yPercent: 0, ease: "power1.inOut", duration: 1 },
-              pos
-            )
-            .fromTo(bgs[i], { yPercent: 15 }, { yPercent: 0, ease: "power1.inOut", duration: 1 }, pos)
-            .to(bgs[i - 1], { yPercent: -15, ease: "power1.inOut", duration: 1 }, pos)
-            .fromTo(
-              splits[i].chars,
-              { autoAlpha: 0, yPercent: 150 },
-              { autoAlpha: 1, yPercent: 0, ease: "power2", duration: 1, stagger: { each: 0.02, from: "random" } },
-              pos + 0.12
-            )
-            .set(panels[i - 1], { autoAlpha: 0 }, pos + 0.999);
+          tl.to(panels[i], { yPercent: 0, ease: "none" }, i - 1);
         }
-
-        return () => splits.forEach((sp) => sp.revert());
       });
     }, sectionRef);
 
-    const t = setTimeout(() => ScrollTrigger.refresh(), 350);
-    // recompute once everything (fonts, videos, layout) has settled — the pin
-    // start/end are height-dependent, so a stale early measure breaks the reveal.
+    // recompute pin measurements once fonts/videos/layout have settled
+    const t = setTimeout(() => ScrollTrigger.refresh(), 300);
     const onLoad = () => ScrollTrigger.refresh();
     window.addEventListener("load", onLoad);
     return () => { clearTimeout(t); window.removeEventListener("load", onLoad); ctx.revert(); };
@@ -90,24 +58,19 @@ export default function ScrollPanels() {
       <div className={s.pin} ref={pinRef}>
         {PANELS.map((p, i) => (
           <div className={s.panel} key={i}>
-            <div className={s.outer}>
-              <div className={s.inner}>
-                <div className={s.bg}>
-                  <video
-                    className={s.bgVideo}
-                    src={p.video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                  />
-                  <h2 className={s.heading} data-noreveal>
-                    {p.lead} <span className={s.accent}>{p.accent}</span>
-                  </h2>
-                </div>
-              </div>
-            </div>
+            <video
+              className={s.bgVideo}
+              src={p.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+            <span className={s.scrim} />
+            <h2 className={s.heading} data-noreveal>
+              {p.lead} <span className={s.accent}>{p.accent}</span>
+            </h2>
             {i === 0 && <span className={s.hint}>scroll ↓</span>}
           </div>
         ))}

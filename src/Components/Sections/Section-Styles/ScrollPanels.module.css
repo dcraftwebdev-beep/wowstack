@@ -1,4 +1,4 @@
-/* ============ SCROLL PANELS — pinned animated sections ============ */
+/* ============ SCROLL PANELS — pinned slide-up stack ============ */
 .section { position: relative; background: #07060a; }
 
 .pin {
@@ -10,23 +10,16 @@
 .panel {
   position: absolute;
   inset: 0;
-  visibility: hidden; /* GSAP autoAlpha controls */
-}
-.outer, .inner {
-  width: 100%;
-  height: 100%;
   overflow: hidden;
-}
-.bg {
-  position: absolute;
-  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #0e0b14;
-  overflow: hidden;
   will-change: transform;
 }
+/* before GSAP runs, keep every panel after the first off-screen (no flash) */
+.panel:not(:first-child) { transform: translateY(100%); }
+
 .bgVideo {
   position: absolute;
   inset: 0;
@@ -35,11 +28,11 @@
   object-fit: cover;
   z-index: 0;
 }
-.bg::after {
-  content: "";
+.scrim {
   position: absolute;
   inset: 0;
   z-index: 1;
+  pointer-events: none;
   background:
     radial-gradient(80% 60% at 50% 50%, rgba(245, 158, 11, 0.14), transparent 70%),
     linear-gradient(180deg, rgba(7, 6, 10, 0.55) 35%, rgba(7, 6, 10, 0.82) 100%);
@@ -61,7 +54,6 @@
   text-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
 }
 .accent { color: var(--acc, #f59e0b); }
-.heading :global(.char) { will-change: transform; }
 
 .hint {
   position: absolute;
@@ -76,17 +68,15 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* mobile keeps the same pinned scroll as desktop (GSAP controls it) */
+/* mobile keeps the same pinned slide-up scroll as desktop (GSAP controls it) */
 @media (max-width: 767px) {
   .heading { font-size: clamp(2rem, 9vw, 4rem); }
 }
 
-/* Reduced-motion: GSAP animation is skipped, so the JS never reveals the
-   panels — show them as a clean stacked list instead of a blank section. */
+/* Reduced-motion: GSAP is skipped, so show the panels as a clean stacked list
+   instead of a blank/overlapping section. */
 @media (prefers-reduced-motion: reduce) {
   .pin { height: auto; overflow: visible; display: flex; flex-direction: column; gap: 14px; padding: 14px; }
-  .panel { position: relative; inset: auto; visibility: visible; height: 60vh; border-radius: 20px; overflow: hidden; }
-  .outer, .inner { position: static; }
-  .bg { position: absolute; inset: 0; }
+  .panel { position: relative; inset: auto; transform: none !important; height: 60vh; border-radius: 20px; }
   .hint { display: none; }
 }
