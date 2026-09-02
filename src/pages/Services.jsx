@@ -18,6 +18,8 @@ import {
   CalendarClock,
   Sparkles,
 } from "lucide-react";
+import * as THREE from "three";
+import GLOBE from "vanta/dist/vanta.globe.min";
 import styles from "../Components/Sections/Section-Styles/MyServices.module.css";
 import { SITE_URL } from "../Components/Seo";
 import PageSeo from "../Components/PageSeo";
@@ -42,9 +44,34 @@ const SERVICES = [
 
 export default function Services() {
   const ref = useRef(null);
+  const vantaRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  // Vanta GLOBE — interactive amber globe behind the hero content
+  useEffect(() => {
+    if (!vantaRef.current) return;
+    let effect;
+    try {
+      effect = GLOBE({
+        el: vantaRef.current,
+        THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200,
+        minWidth: 200,
+        scale: 1,
+        scaleMobile: 1,
+        color: 0xf59e0b,        // amber lines
+        color2: 0xfbbf24,       // amber points
+        backgroundColor: 0x07060a,
+        size: 1,
+      });
+    } catch (e) { /* WebGL unavailable — hero just shows the dark background */ }
+    return () => { effect && effect.destroy && effect.destroy(); };
   }, []);
 
   useEffect(() => {
@@ -88,8 +115,13 @@ export default function Services() {
   return (
     <section className={styles.section} ref={ref} style={{ paddingTop: "132px" }}>
       <PageSeo path="/services" jsonLd={servicesJsonLd} />
-      <div className={styles.top}>
-        <div className={styles.content}>
+      <div
+        className={styles.top}
+        style={{ position: "relative", overflow: "hidden", minHeight: "clamp(420px, 62vh, 600px)", display: "flex", alignItems: "center" }}
+      >
+        <div ref={vantaRef} aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0 }} />
+        <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", background: "radial-gradient(65% 65% at 50% 45%, transparent 0%, rgba(7,6,10,0.55) 100%)" }} />
+        <div className={styles.content} style={{ position: "relative", zIndex: 1 }}>
           <div className={`uiTag ${styles.reveal}`}>
             <span className="uiTag__dot" />
             <span className="uiTag__text">Our Services</span>
