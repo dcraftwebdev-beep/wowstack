@@ -21,6 +21,7 @@ import {
 import * as THREE from "three";
 import GLOBE from "vanta/dist/vanta.globe.min";
 import styles from "../Components/Sections/Section-Styles/MyServices.module.css";
+import sv from "./PageStyles/Services.module.css";
 import { SITE_URL } from "../Components/Seo";
 import PageSeo from "../Components/PageSeo";
 
@@ -113,15 +114,12 @@ export default function Services() {
   };
 
   return (
-    <section className={styles.section} ref={ref} style={{ paddingTop: "72px" }}>
+    <section className={`${styles.section} ${sv.heroSection}`} ref={ref}>
       <PageSeo path="/services" jsonLd={servicesJsonLd} />
-      <div
-        className={styles.top}
-        style={{ position: "relative", overflow: "hidden", minHeight: "clamp(360px, 52vh, 520px)", display: "flex", alignItems: "center" }}
-      >
-        <div ref={vantaRef} aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0 }} />
-        <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", background: "radial-gradient(65% 65% at 50% 45%, transparent 0%, rgba(7,6,10,0.55) 100%)" }} />
-        <div className={styles.content} style={{ position: "relative", zIndex: 1 }}>
+      <div className={`${styles.top} ${sv.heroTop}`}>
+        <div ref={vantaRef} aria-hidden="true" className={sv.heroGlobe} />
+        <span aria-hidden="true" className={sv.heroVignette} />
+        <div className={`${styles.content} ${sv.heroContent}`}>
           <div className={`uiTag ${styles.reveal}`}>
             <span className="uiTag__dot" />
             <span className="uiTag__text">Our Services</span>
