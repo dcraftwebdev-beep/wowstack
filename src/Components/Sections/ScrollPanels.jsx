@@ -50,8 +50,6 @@ export default function ScrollPanels() {
             pin: pinRef.current,
             scrub: 1,
             anticipatePin: 1,
-            invalidateOnRefresh: true, // recompute cleanly on every refresh
-            refreshPriority: 1,        // pin computes before the parallax triggers
           },
         });
 
@@ -80,7 +78,11 @@ export default function ScrollPanels() {
     }, sectionRef);
 
     const t = setTimeout(() => ScrollTrigger.refresh(), 350);
-    return () => { clearTimeout(t); ctx.revert(); };
+    // recompute once everything (fonts, videos, layout) has settled — the pin
+    // start/end are height-dependent, so a stale early measure breaks the reveal.
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    return () => { clearTimeout(t); window.removeEventListener("load", onLoad); ctx.revert(); };
   }, []);
 
   return (

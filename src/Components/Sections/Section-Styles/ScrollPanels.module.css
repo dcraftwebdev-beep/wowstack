@@ -80,3 +80,13 @@
 @media (max-width: 767px) {
   .heading { font-size: clamp(2rem, 9vw, 4rem); }
 }
+
+/* Reduced-motion: GSAP animation is skipped, so the JS never reveals the
+   panels — show them as a clean stacked list instead of a blank section. */
+@media (prefers-reduced-motion: reduce) {
+  .pin { height: auto; overflow: visible; display: flex; flex-direction: column; gap: 14px; padding: 14px; }
+  .panel { position: relative; inset: auto; visibility: visible; height: 60vh; border-radius: 20px; overflow: hidden; }
+  .outer, .inner { position: static; }
+  .bg { position: absolute; inset: 0; }
+  .hint { display: none; }
+}

@@ -113,11 +113,11 @@ export default function Services() {
   };
 
   return (
-    <section className={styles.section} ref={ref} style={{ paddingTop: "132px" }}>
+    <section className={styles.section} ref={ref} style={{ paddingTop: "72px" }}>
       <PageSeo path="/services" jsonLd={servicesJsonLd} />
       <div
         className={styles.top}
-        style={{ position: "relative", overflow: "hidden", minHeight: "clamp(420px, 62vh, 600px)", display: "flex", alignItems: "center" }}
+        style={{ position: "relative", overflow: "hidden", minHeight: "clamp(360px, 52vh, 520px)", display: "flex", alignItems: "center" }}
       >
         <div ref={vantaRef} aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0 }} />
         <span aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none", background: "radial-gradient(65% 65% at 50% 45%, transparent 0%, rgba(7,6,10,0.55) 100%)" }} />
