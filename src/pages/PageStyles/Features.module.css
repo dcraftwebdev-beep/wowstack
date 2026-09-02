@@ -423,40 +423,19 @@
 }
 
 @media (max-width: 720px) {
-  /* stack: node on top, all cards below — keep the energy-flow effect via a glowing spine */
-  .flowMap { grid-template-columns: 1fr; gap: 18px; min-height: 0; position: relative; }
+  /* clean stacked layout on mobile: hub on top, feature cards in a 2-col grid */
+  .flowMap { display: flex; flex-direction: column; gap: 16px; min-height: 0; position: relative; }
   .flowLines { display: none; }               /* the horizontal comb doesn't map to a stack */
-  .flowNode { justify-self: center; order: -1; z-index: 2; }
-  .flowSide { height: auto; align-items: stretch; gap: 18px; }
-  .flowCard { max-width: 100%; }
-
-  /* central glowing spine connecting the node down through every card */
-  .flowMap::before {
-    content: "";
-    position: absolute; top: 60px; bottom: 8px; left: 50%; width: 2px;
-    transform: translateX(-50%);
-    background: linear-gradient(180deg, rgba(245, 158, 11, 0.55), rgba(245, 158, 11, 0.28) 55%, rgba(245, 158, 11, 0.05));
-    z-index: 0; border-radius: 2px;
+  .flowNode { order: -1; align-self: center; margin-bottom: 6px; z-index: 2; }
+  .flowSide {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    height: auto; align-items: stretch;
   }
-  /* a pulse of energy travelling down the spine */
-  .flowMap::after {
-    content: "";
-    position: absolute; left: 50%; top: 60px; width: 9px; height: 9px;
-    margin-left: -4.5px; border-radius: 50%;
-    background: var(--acc, #f59e0b);
-    box-shadow: 0 0 14px 4px rgba(245, 158, 11, 0.6);
-    z-index: 1;
-    animation: flowSpinePulse 2.6s cubic-bezier(0.6, 0, 0.4, 1) infinite;
-  }
-  @keyframes flowSpinePulse {
-    0% { top: 60px; opacity: 0; }
-    12% { opacity: 1; }
-    88% { opacity: 1; }
-    100% { top: calc(100% - 8px); opacity: 0; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .flowMap::after { animation: none; opacity: 0; }
-  }
+  .flowSideL, .flowSideR { align-items: stretch; }
+  .flowCard { max-width: 100%; width: 100%; }
+}
+@media (max-width: 460px) {
+  .flowSide { grid-template-columns: 1fr; }
 }
 
 /* ── FULL DARK SECTION ── */
