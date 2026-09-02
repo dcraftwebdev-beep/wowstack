@@ -156,11 +156,20 @@ export default function Layout() {
   useHeadingReveal()
   useParallax()
 
-  // jump to top on route change (with Lenis, so it doesn't smooth-scroll the whole page)
+  // jump to top on every route change — Lenis + native, before and after paint
   const { pathname } = useLocation()
   useEffect(() => {
-    lenisRef.current?.scrollTo(0, { immediate: true })
-    ScrollTrigger.refresh()
+    if ("scrollRestoration" in window.history) window.history.scrollRestoration = "manual"
+  }, [])
+  useEffect(() => {
+    const toTop = () => {
+      lenisRef.current?.scrollTo(0, { immediate: true, force: true })
+      window.scrollTo(0, 0)
+      if (document.scrollingElement) document.scrollingElement.scrollTop = 0
+    }
+    toTop()
+    const id = requestAnimationFrame(() => { toTop(); ScrollTrigger.refresh() })
+    return () => cancelAnimationFrame(id)
   }, [pathname, lenisRef])
 
   // hide the bottom blur bar once the footer is on screen

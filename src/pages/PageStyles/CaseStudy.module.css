@@ -42,7 +42,7 @@
 
 .heroTitle {
   font-family: var(--font-main);
-  font-size: clamp(2.6rem, 7vw, 5.4rem);
+  font-size: clamp(1.9rem, 8vw, 5.4rem);
   font-weight: 800;
   color: #fff;
   line-height: 1.02;
@@ -189,7 +189,7 @@
 .resultItem:first-child { padding-left: 0; }
 .resultValue {
   font-family: var(--font-main);
-  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  font-size: clamp(1.9rem, 6vw, 3.6rem);
   font-weight: 800;
   color: #fff;
   line-height: 1;
@@ -218,7 +218,7 @@
 .finalCta { padding: 96px 0 100px; text-align: center; }
 .finalTitle {
   font-family: var(--font-main);
-  font-size: clamp(2rem, 5vw, 3.4rem);
+  font-size: clamp(1.75rem, 6vw, 3.4rem);
   font-weight: 800;
   color: #fff;
   line-height: 1.08;

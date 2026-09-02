@@ -521,7 +521,7 @@
   .myworks-container { padding: 100px 16px 70px; }
   .header-content { flex-direction: column; align-items: flex-start; }
   .projects-grid { grid-template-columns: 1fr; }
-  .works-title { font-size: 34px; }
+  .works-title { font-size: 28px; }
 }
 @media (max-width: 600px) {
   .transparency-banner { flex-direction: column; padding: 26px 22px; }
