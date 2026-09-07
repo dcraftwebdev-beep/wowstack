@@ -3,11 +3,16 @@ import {
   TrendingUp, Sparkles, ShieldCheck, Timer
 } from "lucide-react";
 import styles from "./PageStyles/Pricing.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import FAQ from "../Components/Sections/FAQ";
 import ContactMe from "../Components/Sections/ContactMe";
 import PageSeo from "../Components/PageSeo";
 import { faqJsonLd } from "../data/faqs";
+import DarkVeil from "../Components/UI/DarkVeil";
+import Button from "../Components/UI/Button";
+import { ArrowRight } from "lucide-react";
+// heavy 3D libs — only loaded on this page
+const Lanyard = lazy(() => import("../Components/UI/Lanyard"));
 
 
 export default function Pricing() {
@@ -82,27 +87,45 @@ export default function Pricing() {
       <PageSeo path="/pricing" jsonLd={faqJsonLd} />
       <section className={styles.wrapper}>
 
-        {/* HEADER */}
-        <div className={styles.header}>
-          {/* <div className={styles.eyebrow}>
-            <Sparkles size={12} />
-            Simple, Transparent Pricing
-          </div> */}
+        {/* animated DarkVeil background, from the page top behind the nav */}
+        <div className={styles.heroBg} aria-hidden="true">
+          <DarkVeil hueShift={0} noiseIntensity={0.06} scanlineIntensity={0} speed={0.8} scanlineFrequency={0.5} warpAmount={0} />
+        </div>
 
-          <h1 className={styles.title}>
-            Invest Once. <span className={styles.accent}>Get Clients for Years</span>
-          </h1>
+        {/* HERO — text left, interactive hanging tag right */}
+        <div className={styles.hero}>
+          <div className={styles.header}>
+            <div className={`uiTag ${styles.heroEyebrow}`}>
+              <span className="uiTag__dot" />
+              <span className="uiTag__text">Simple, transparent pricing</span>
+              <span className="uiTag__line" />
+            </div>
 
-          <p className={styles.subtitle}>
-            Not just a website. A complete growth system to capture leads and scale your business.
-          </p>
+            <h1 className={styles.title}>
+              Invest Once. <span className={styles.accent}>Get Clients for Years</span>
+            </h1>
 
-          {/* 🔥 MICRO TRUST */}
-          {/* <p className={styles.microTrust}>
-            Trusted by growing businesses. Built for results, not just design.
-          </p> */}
+            <p className={styles.subtitle}>
+              Not just a website. A complete growth system to capture leads and scale your business.
+            </p>
+          </div>
 
-          {/* TOGGLE */}
+          {/* interactive hanging tag (drag it!) */}
+          <div className={styles.heroTag} aria-hidden="true">
+            <Suspense fallback={null}>
+              <Lanyard
+                position={[-4, 5, 22]}
+                gravity={[0, -40, 0]}
+                frontImage="/lanyard/card-front.svg"
+                backImage="/lanyard/card-back.svg"
+                imageFit="cover"
+              />
+            </Suspense>
+          </div>
+        </div>
+
+        {/* BILLING TOGGLE — centered above the pricing cards */}
+        <div className={styles.billingBar}>
           <div className={styles.toggle}>
             <button
               className={`${styles.toggleBtn} ${billingCycle === "one-time" ? styles.active : ""}`}

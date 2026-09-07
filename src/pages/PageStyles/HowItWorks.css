@@ -1,9 +1,32 @@
 /* ============ HOW IT WORKS — dark / amber, GSAP sticky journey ============ */
 .hiw-wrapper {
+  --nav-h: 85px;
   background: #07060a;
+  position: relative;
+  /* pull up under the transparent nav so the DarkVeil bg reaches the page top */
+  margin-top: calc(-1 * var(--nav-h));
   /* clip horizontal only so the sticky step-deck can pin */
   overflow-x: clip;
 }
+@media (max-width: 768px) { .hiw-wrapper { --nav-h: 58px; } }
+
+/* DarkVeil hero background */
+.hiw-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(440px, 62vh, 620px);
+  z-index: 0;
+  pointer-events: none;
+}
+.hiw-hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 6, 10, 0) 45%, #07060a 100%);
+}
+.hiw-intro { position: relative; z-index: 1; }
 
 /* ── intro ── */
 .hiw-intro {

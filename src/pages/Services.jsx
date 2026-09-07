@@ -18,8 +18,7 @@ import {
   CalendarClock,
   Sparkles,
 } from "lucide-react";
-import * as THREE from "three";
-import GLOBE from "vanta/dist/vanta.globe.min";
+import DarkVeil from "../Components/UI/DarkVeil";
 import styles from "../Components/Sections/Section-Styles/MyServices.module.css";
 import sv from "./PageStyles/Services.module.css";
 import { SITE_URL } from "../Components/Seo";
@@ -45,34 +44,9 @@ const SERVICES = [
 
 export default function Services() {
   const ref = useRef(null);
-  const vantaRef = useRef(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  // Vanta GLOBE — interactive amber globe behind the hero content
-  useEffect(() => {
-    if (!vantaRef.current) return;
-    let effect;
-    try {
-      effect = GLOBE({
-        el: vantaRef.current,
-        THREE,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200,
-        minWidth: 200,
-        scale: 1,
-        scaleMobile: 1,
-        color: 0xf59e0b,        // amber lines
-        color2: 0xfbbf24,       // amber points
-        backgroundColor: 0x07060a,
-        size: 1,
-      });
-    } catch (e) { /* WebGL unavailable — hero just shows the dark background */ }
-    return () => { effect && effect.destroy && effect.destroy(); };
   }, []);
 
   useEffect(() => {
@@ -117,7 +91,16 @@ export default function Services() {
     <section className={`${styles.section} ${sv.heroSection}`} ref={ref}>
       <PageSeo path="/services" jsonLd={servicesJsonLd} />
       <div className={`${styles.top} ${sv.heroTop}`}>
-        <div ref={vantaRef} aria-hidden="true" className={sv.heroGlobe} />
+        <div aria-hidden="true" className={sv.heroGlobe}>
+          <DarkVeil
+            hueShift={0}
+            noiseIntensity={0.06}
+            scanlineIntensity={0}
+            speed={0.8}
+            scanlineFrequency={0.5}
+            warpAmount={0}
+          />
+        </div>
         <span aria-hidden="true" className={sv.heroVignette} />
         <div className={`${styles.content} ${sv.heroContent}`}>
           <div className={`uiTag ${styles.reveal}`}>

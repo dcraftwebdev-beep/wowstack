@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import ContactMe from "../Components/Sections/ContactMe";
 import PageSeo from "../Components/PageSeo";
+import DarkVeil from "../Components/UI/DarkVeil";
 import ProcessSection from "../Components/Sections/ProcessSection";
 import ToolsSection from "../Components/Sections/ToolsSection";
 
@@ -154,6 +155,11 @@ const Features = () => {
   return (
     <div className={styles.page}>
       <PageSeo path="/flow-and-features" />
+
+      {/* animated DarkVeil hero background */}
+      <div className={styles.heroVeil} aria-hidden="true">
+        <DarkVeil hueShift={0} noiseIntensity={0.06} scanlineIntensity={0} speed={0.8} scanlineFrequency={0.5} warpAmount={0} />
+      </div>
 
       {/* ── HERO SPLIT ── */}
       <div className={styles.heroSection}>

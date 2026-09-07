@@ -2,8 +2,20 @@
 .hero {
   position: relative;
   background: #07060a;
-  padding: clamp(20px, 5vh, 88px) 0 0;   /* headline on top, image band below */
+  --nav-h: 84px;                          /* height of the transparent sticky header */
+  /* slide the hero (and its light-rays layer) up under the header so the rays
+     start at the very top of the page; padding pushes the content back down */
+  margin-top: calc(-1 * var(--nav-h));
+  padding: calc(var(--nav-h) + clamp(20px, 5vh, 88px)) 0 0;
   overflow: hidden;
+}
+
+/* ---- WebGL DarkVeil background layer: full hero, behind the content ---- */
+.rays {
+  position: absolute;
+  inset: 0;
+  z-index: 0;              /* base background, behind gallery (1) + text (2) */
+  pointer-events: none;
 }
 
 /* ---- text (constrained width), sits above the image background ---- */
@@ -71,9 +83,11 @@
   will-change: filter, opacity, transform;
 }
 
+.eyebrow { margin: 0 auto 22px; }
+
 .sub {
-  max-width: 540px;
-  margin: 0 auto;
+  max-width: 560px;
+  margin: 18px auto 0;
   color: rgba(255, 255, 255, 0.72);
   font-family: var(--font-main);
   font-size: clamp(1rem, 1.4vw, 1.15rem);
@@ -81,7 +95,34 @@
 }
 
 /* ---- CTA ---- */
-.cta { margin-top: 30px; }
+.cta {
+  margin-top: 32px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ctaGhost {
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 6px 2px;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.ctaGhost:hover { color: #fff; border-color: rgba(255, 255, 255, 0.4); }
+
+/* curved gallery band below the hero text */
+.homeGallery {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: clamp(360px, 52vh, 560px);
+  /* margin-top: clamp(24px, 4vh, 48px); */
+}
 .getStarted {
   display: inline-flex;
   align-items: center;
@@ -123,6 +164,10 @@
   align-items: flex-start;      /* don't stretch columns; let them overflow tall */
   gap: 12px;
   padding: 0 12px;
+  /* soft fade at the top so the image band blends into the DarkVeil above
+     instead of a hard edge (reveals whatever is behind, not a black strip) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(90px, 16%, 160px));
+  mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(90px, 16%, 160px));
   /* smooth entrance on load (opacity only — transform is used for centering) */
   animation: heroPuzzleIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
 }
@@ -180,7 +225,8 @@
   pointer-events: none;
   z-index: 3;
 }
-.puzzleFadeTop { top: 0; height: 70px; background: linear-gradient(#07060a, transparent); }
+/* top now handled by the puzzle's own mask (fades into the DarkVeil) */
+.puzzleFadeTop { display: none; }
 .puzzleFadeBottom { bottom: 0; height: 160px; background: linear-gradient(transparent, #07060a); }
 
 /* ---- side notes + arrows pointing to the images ---- */
@@ -253,9 +299,10 @@
   .noteLeft, .noteRight { display: none; } /* not enough room beside the text */
 }
 @media (max-width: 768px) {
+  .hero { --nav-h: 58px; }                 /* shorter header bar on mobile */
   .puzzleCol:nth-child(n + 5) { display: none; } /* 4 columns */
 }
 @media (max-width: 480px) {
-  .hero { padding: 72px 0 0; }
+  .hero { padding: calc(var(--nav-h) + 72px) 0 0; }
   .puzzleCol:nth-child(n + 4) { display: none; } /* 3 columns */
 }

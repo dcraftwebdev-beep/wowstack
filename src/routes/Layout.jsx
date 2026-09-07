@@ -5,6 +5,7 @@ import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import Header from "../Components/Sections/Header"
 import Footer from "../Components/Sections/footer"
+import Noise from "../Components/UI/Noise"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -205,6 +206,8 @@ export default function Layout() {
       <Footer />
       <div className="screenGlow" aria-hidden="true" ref={glowRef} />
       <CursorDot />
+      {/* global film-grain overlay (premium noise over the dark bg) — disabled for now, re-enable when ready */}
+      {/* <Noise patternAlpha={14} patternRefreshInterval={2} /> */}
     </>
   )
 }

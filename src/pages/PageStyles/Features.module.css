@@ -2,13 +2,36 @@
 
 /* ── PAGE ── */
 .page {
+  --nav-h: 85px;
   background: #07060a;
   font-family: var(--font-main);
+  position: relative;
+  /* pull up under the transparent nav so the DarkVeil bg reaches the page top */
+  margin-top: calc(-1 * var(--nav-h));
   /* clip horizontal overflow only — overflow-y must stay visible so the
      sticky stacking deck in FeatureShowcase can pin correctly. */
   overflow-x: clip;
-  padding-top: 60px;
+  padding-top: calc(var(--nav-h) + 60px);
 }
+@media (max-width: 768px) { .page { --nav-h: 58px; } }
+
+/* DarkVeil hero background */
+.heroVeil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(440px, 60vh, 600px);
+  z-index: 0;
+  pointer-events: none;
+}
+.heroVeil::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 6, 10, 0) 45%, #07060a 100%);
+}
+.heroSection { position: relative; z-index: 1; }
 
 /* ── HERO SECTION ── */
 .heroSection {

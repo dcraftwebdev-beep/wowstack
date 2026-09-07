@@ -6,6 +6,7 @@ import './PageStyles/MyWorks.css';
 import { ExternalLink, ArrowRight, Eye } from 'lucide-react';
 import PageSeo from '../Components/PageSeo';
 import Button from '../Components/UI/Button';
+import DarkVeil from '../Components/UI/DarkVeil';
 import { usePublishedProjects } from '../data/useProjects';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -138,9 +139,14 @@ export default function MyWorks() {
     <div className="myworks-container" ref={rootRef}>
       <PageSeo path="/our-works" />
 
+      {/* animated DarkVeil background at the top of the page (behind the nav) */}
+      <div className="works-hero-bg" aria-hidden="true">
+        <DarkVeil hueShift={0} noiseIntensity={0.06} scanlineIntensity={0} speed={0.8} scanlineFrequency={0.5} warpAmount={0} />
+      </div>
+
       {/* ── HEADER ── */}
       <header className="myworks-header works-reveal">
-        <div className="header-content">
+        <div className="header-content header-centered">
           <div className="header-left">
             <div className="uiTag">
               <span className="uiTag__dot" />
@@ -156,11 +162,6 @@ export default function MyWorks() {
             </p>
           </div>
 
-          <div className="stats-container">
-            <div className="stat"><span className="stat-number">{total}</span><span className="stat-label">Projects</span></div>
-            <div className="stat"><span className="stat-number">{featuredCount}</span><span className="stat-label">Featured</span></div>
-            <div className="stat"><span className="stat-number">{totalViews.toLocaleString()}</span><span className="stat-label">Views</span></div>
-          </div>
         </div>
       </header>
 

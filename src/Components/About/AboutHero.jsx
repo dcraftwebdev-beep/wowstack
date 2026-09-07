@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { ArrowRight } from "lucide-react";
+import React from "react";
 import styles from "./AboutHero.module.css";
-import Button from "../UI/Button";
 import useReveal from "../../hooks/useReveal";
+import DarkVeil from "../UI/DarkVeil";
+import HeroPuzzle from "../Sections/HeroPuzzle";
 
 // per-word blur reveal — space rendered as a real text node between the
 // inline-block spans (a trailing space *inside* an inline-block gets trimmed,
@@ -19,25 +19,14 @@ const words = (text, start = 0, step = 0.07) => {
 
 export default function AboutHero() {
   const ref = useReveal(styles.reveal, styles.isVisible);
-  const videoRef = useRef(null);
-
-  // play the video when it scrolls into view, pause when it leaves — no controls, no popup
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) { v.play().catch(() => {}); }
-        else v.pause();
-      }),
-      { threshold: 0.35 }
-    );
-    io.observe(v);
-    return () => io.disconnect();
-  }, []);
 
   return (
     <section className={styles.hero} ref={ref}>
+      {/* WebGL DarkVeil background behind the content */}
+      <div className={styles.rays} aria-hidden="true">
+        <DarkVeil hueShift={0} noiseIntensity={0.06} scanlineIntensity={0} speed={0.8} scanlineFrequency={0.5} warpAmount={0} />
+      </div>
+
       <div className={`uiTag ${styles.centerTag}`}>
         <span className="uiTag__dot" />
         <span className="uiTag__text">Deep dive into Wow Stack</span>
@@ -45,29 +34,10 @@ export default function AboutHero() {
       </div>
       <h1 className={styles.heroTitle}>
         <span className={styles.line}>{words(" More About Wow Stack", 0)}</span>
-        <span className={`${styles.line} ${styles.accent}`}>{words("Let's Deep Dive!", 0.28)}</span>
       </h1>
-      <p className={styles.heroSub}>
-        Wow Stack is your go-to studio for web design, development and automation
-        — we help ambitious businesses turn visitors into paying customers.
-      </p>
-      {/* <div className={styles.heroCtas}>
-        <Button to="/contact" size="lg" icon={<ArrowRight size={17} />}>Connect with us</Button>
-      </div> */}
 
-      <div className={`${styles.heroMedia} ${styles.reveal}`}>
-        <video
-          ref={videoRef}
-          className={styles.heroVideo}
-          src="/videos/webdesign.mp4"
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-label="Wow Stack showreel"
-        />
-        <span className={styles.heroGlow} />
-      </div>
+      {/* scroll-reactive puzzle grid of our work, below the hero text */}
+      <HeroPuzzle />
     </section>
   );
 }

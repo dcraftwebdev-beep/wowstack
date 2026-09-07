@@ -1,0 +1,27 @@
+.lanyard-wrapper {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  /* the canvas never blocks the page — R3F listens on the document instead, so
+     the card can be grabbed anywhere while clicks fall through to the content */
+  pointer-events: none;
+  /* fade in smoothly on load (after the canvas has measured) so it doesn't pop */
+  animation: lanyardFadeIn 0.7s ease 0.35s both;
+}
+@keyframes lanyardFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* R3F wraps the canvas in its own div — make it fill the wrapper so the canvas
+   measures the real size instead of collapsing to its default 300x150 (which
+   hid the hanging card). */
+.lanyard-wrapper > div {
+  width: 100%;
+  height: 100%;
+}
+.lanyard-wrapper canvas {
+  display: block;
+  touch-action: none;
+}

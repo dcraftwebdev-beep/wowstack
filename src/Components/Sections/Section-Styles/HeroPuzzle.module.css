@@ -1,0 +1,78 @@
+/* ---- reusable puzzle grid of small images (full-bleed band) ---- */
+.puzzle {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;                 /* full-bleed band */
+  margin-top: clamp(20px, 3vh, 34px);
+  height: clamp(400px, 52vh, 600px);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0 12px;
+  /* soft fade at the top so the band blends into the bg above (no hard edge) */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(90px, 16%, 160px));
+  mask-image: linear-gradient(to bottom, transparent 0, #000 clamp(90px, 16%, 160px));
+  animation: heroPuzzleIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+@keyframes heroPuzzleIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.puzzleCol {
+  flex: 1 1 0;
+  min-width: 0;
+  will-change: transform;
+}
+.puzzleColInner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  will-change: transform;
+  animation-name: colDrift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes colDrift {
+  from { transform: translateY(-18px); }
+  to   { transform: translateY(18px); }
+}
+.puzzleTile {
+  flex: 0 0 auto;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #1a1922;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+}
+.puzzleTile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.puzzleTile:hover img { transform: scale(1.06); }
+
+.a11 { aspect-ratio: 1 / 1; }
+.a34 { aspect-ratio: 3 / 4; }
+.a43 { aspect-ratio: 4 / 3; }
+.a45 { aspect-ratio: 4 / 5; }
+
+.puzzleFadeBottom {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 160px;
+  pointer-events: none;
+  z-index: 3;
+  background: linear-gradient(transparent, #07060a);
+}
+
+@media (max-width: 768px) {
+  .puzzleCol:nth-child(n + 5) { display: none; }  /* 4 columns */
+}
+@media (max-width: 480px) {
+  .puzzleCol:nth-child(n + 4) { display: none; }  /* 3 columns */
+}

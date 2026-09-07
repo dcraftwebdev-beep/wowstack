@@ -11,6 +11,7 @@ import ContactMe from "../Components/Sections/ContactMe"
 import CallToAction from "../Components/Sections/CallToAction"
 import HorizontalText from "../Components/Sections/HorizontalText"
 import ScrollPanels from "../Components/Sections/ScrollPanels"
+import ServiceExpand from "../Components/Sections/ServiceExpand"
 import DesignExploration from "../Components/Sections/DesignExploration"
 import { SITE_URL } from "../Components/Seo"
 import PageSeo from "../Components/PageSeo"
@@ -54,7 +55,8 @@ export default function Home() {
       
       <Hero />
       
-      <HorizontalText />
+      {/* <HorizontalText /> */}
+      <ServiceExpand />
       <MyServices />
       <GrowthStack />
       <WhyChooseMe />

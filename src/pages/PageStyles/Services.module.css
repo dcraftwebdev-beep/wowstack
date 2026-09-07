@@ -1,12 +1,31 @@
-/* Services page — hero with the Vanta globe background */
-.heroSection { padding-top: 0; }
+/* Services page — full-screen hero with the MoltenMetal background */
+.heroSection {
+  --nav-h: 84px;                          /* transparent sticky header height */
+  padding-top: 0;
+  /* pull the hero (and its molten bg) up under the transparent header so the
+     background fills from the very top of the page, behind the nav */
+  margin-top: calc(-1 * var(--nav-h));
+}
 
 .heroTop {
   position: relative;
   overflow: hidden;
-  min-height: clamp(360px, 52vh, 520px);
+  min-height: 100vh;                       /* full-screen hero */
   display: flex;
   align-items: center;
+  justify-content: center;                 /* fully centered content */
+  padding-top: var(--nav-h);               /* keep the content clear of the nav */
+}
+
+/* center the hero content block itself */
+.heroContent {
+  margin: 0 auto;
+  text-align: center;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .heroSection { --nav-h: 58px; }          /* shorter header bar on mobile */
 }
 
 /* the Vanta GLOBE canvas fills the hero, behind the content */

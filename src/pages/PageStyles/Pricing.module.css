@@ -25,14 +25,38 @@
 
 /* ── WRAPPER ── */
 .wrapper {
+  --nav-h: 85px;                     /* transparent sticky nav height */
   background: #07060a;
   min-height: 100vh;
-  padding: 80px 24px 120px;
+  /* pull up under the transparent nav so the hero reaches the page top; the hero
+     itself clears the nav with its own padding */
+  margin-top: calc(-1 * var(--nav-h));
+  padding: 0 24px 120px;
   max-width: 100%;
-  margin: 0;
-  /* font-family: 'DM Sans', sans-serif; */
   position: relative;
   overflow: hidden;
+}
+@media (max-width: 768px) {
+  .wrapper { --nav-h: 58px; }
+}
+
+/* animated liquid background — full-bleed, full viewport from the page top */
+.heroBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 0;                        /* behind all the hero content */
+  pointer-events: none;             /* LiquidEther reacts via its own window listeners */
+}
+/* fade the liquid into the page bottom so it blends into the pricing grid */
+.heroBg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(7, 6, 10, 0) 55%, #07060a 100%);
 }
 
 /* Background atmosphere */
@@ -49,14 +73,54 @@
   z-index: 0;
 }
 
-/* ── HEADER ── */
-.header {
-  text-align: center;
+/* ── HERO: full-screen; centered text, lanyard hanging over the whole hero ── */
+.hero {
   position: relative;
   z-index: 1;
-  max-width: 720px;
-  margin: 0 auto 64px;
-  animation: fadeUp 0.8s ease both;
+  min-height: 100vh;                  /* full-screen so the lanyard has room to hang/swing */
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-top: var(--nav-h);          /* keep the text clear of the nav */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  --nav-h: 85px;                      /* transparent sticky nav height */
+}
+@media (max-width: 768px) {
+  .hero { --nav-h: 58px; }
+}
+.heroTag {
+  /* hang from the very top of the page (behind the transparent nav) down through
+     the hero. Absolute so it doesn't stretch the grid row that holds the text. */
+  /* fills the full-screen hero (its whole 100vh) so the card has a big drag area,
+     but scrolls away with the hero so it never floats over the pricing cards.
+     Canvas is pointer-events:none (R3F listens on the document), so it never
+     blocks the page underneath. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 40;                        /* over the hero content, below the nav (100) */
+  pointer-events: none;
+  cursor: grab;
+}
+/* only the WebGL canvas grabs pointer input (so the card can be dragged, but the
+   rest of the overlay lets clicks fall through to the page) */
+.heroTag :global(.lanyard-wrapper),
+.heroTag :global(.lanyard-wrapper) canvas {
+  pointer-events: auto;
+}
+
+/* ── HEADER (centered) ── */
+.header {
+  text-align: center;
+  position: relative;                 /* no z-index / no animation → not a stacking context,
+                                         so the heading stays under the dragged card */
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .eyebrow {
@@ -119,6 +183,53 @@
   padding: 5px;
   gap: 4px;
   position: relative;
+  z-index: 50;                        /* stays above the lanyard overlay so it's clickable */
+}
+
+/* hero eyebrow + CTA (billing toggle moved down to the cards) */
+.heroEyebrow { margin-bottom: 20px; }
+.heroCtas { display: flex; gap: 14px; margin-top: 30px; flex-wrap: wrap; position: relative; z-index: 50; }
+
+/* billing toggle bar — centered above the pricing cards */
+.billingBar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 38px;
+}
+
+/* right-side value props beside the hanging tag */
+.heroPoints {
+  grid-column: 2;
+  align-self: end;
+  justify-self: end;
+  margin: 0 0 9vh;
+  padding: 16px 20px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: relative;
+  z-index: 50;                       /* above the lanyard overlay */
+  max-width: 320px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  background: rgba(15, 14, 21, 0.5);
+  backdrop-filter: blur(6px);
+}
+.heroPoints li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.heroPoints li svg { color: var(--gold); flex-shrink: 0; }
+@media (max-width: 960px) {
+  .heroPoints { display: none; }     /* stacked layout has no room beside the tag */
 }
 
 .toggleBtn {
@@ -463,6 +574,33 @@
 
   .popular:hover {
     transform: translateY(-8px);
+  }
+
+  /* stack the hero: tag on top, text below, both centered */
+  .hero {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    gap: 8px;
+    text-align: center;
+  }
+  .hero .header {
+    order: 2;
+    text-align: center;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  .hero .subtitle { margin-left: auto; margin-right: auto; }
+  .heroTag {
+    /* back to in-flow + centered on narrow screens (the page-top overlay only
+       makes sense beside the text on wide layouts) */
+    position: relative;
+    top: auto;
+    right: auto;
+    order: 1;
+    width: min(360px, 100%);
+    margin: 0 auto;
+    height: clamp(360px, 48vh, 440px);
+    z-index: 40;
   }
 }
 

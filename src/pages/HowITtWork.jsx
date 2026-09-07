@@ -7,6 +7,7 @@ import {
   Crown, SlidersHorizontal, Handshake, TrendingUp,
 } from "lucide-react";
 import PageSeo from "../Components/PageSeo";
+import DarkVeil from "../Components/UI/DarkVeil";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -81,6 +82,11 @@ export default function HowITtWork() {
   return (
     <div className="hiw-wrapper" ref={rootRef}>
       <PageSeo path="/how-it-works" />
+
+      {/* animated DarkVeil hero background */}
+      <div className="hiw-hero-bg" aria-hidden="true">
+        <DarkVeil hueShift={0} noiseIntensity={0.06} scanlineIntensity={0} speed={0.8} scanlineFrequency={0.5} warpAmount={0} />
+      </div>
 
       {/* ── INTRO ── */}
       <section className="hiw-intro hiw-reveal">
